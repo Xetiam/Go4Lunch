@@ -10,6 +10,21 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Go4Lunch"
-        tools:targetApi="31" />
+        tools:targetApi="31" >
+        <activity android:name=".ui.coworker.CoworkerActivity"/>
+        <activity android:name=".ui.restaurantlist.RestaurantListActivity"/>
+        <activity android:name=".ui.restaurantmap.RestaurantMapActivity"/>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+    </application>
 
 </manifest>
