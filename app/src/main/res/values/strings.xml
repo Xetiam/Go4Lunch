@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Go4Lunch</string>
+    <string name="app_name">Go4Lunch</string>t
+    <string name="fb_button_text">Sign in with Facebook</string>
+    <string name="gg_button_text">Sign in with Google</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">com.example.go4lunch</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fbcom.example.go4lunch</string>
 </resources>
