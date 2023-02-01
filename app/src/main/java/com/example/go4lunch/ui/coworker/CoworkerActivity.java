@@ -1,5 +1,7 @@
 package com.example.go4lunch.ui.coworker;
 
 
-public class CoworkerActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class CoworkerActivity extends AppCompatActivity {
 }

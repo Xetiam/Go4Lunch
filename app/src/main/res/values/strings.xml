@@ -5,4 +5,7 @@
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">com.example.go4lunch</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbcom.example.go4lunch</string>
+    <string name="mail_button_text">SIGN IN WITH YOUR EMAIL</string>
+    <string name="success_message">Connexion réussie</string>
+    <string name="failure_message">Échec de connexion</string>
 </resources>

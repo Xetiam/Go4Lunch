@@ -1,4 +1,6 @@
 package com.example.go4lunch.ui.restaurantmap;
 
-public class RestaurantMapActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class RestaurantMapActivity extends AppCompatActivity {
 }

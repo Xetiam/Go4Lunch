@@ -1,4 +1,7 @@
 package com.example.go4lunch.ui.restaurantmap;
 
-public class RestaurantMapViewModel {
+
+import androidx.lifecycle.ViewModel;
+
+public class RestaurantMapViewModel extends ViewModel {
 }

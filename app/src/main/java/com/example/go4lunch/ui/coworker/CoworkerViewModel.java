@@ -1,4 +1,6 @@
 package com.example.go4lunch.ui.coworker;
 
-public class CoworkerViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class CoworkerViewModel extends ViewModel {
 }

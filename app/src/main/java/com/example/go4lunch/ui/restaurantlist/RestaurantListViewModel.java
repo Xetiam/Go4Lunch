@@ -1,4 +1,6 @@
 package com.example.go4lunch.ui.restaurantlist;
 
-public class RestaurantListViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class RestaurantListViewModel extends ViewModel {
 }

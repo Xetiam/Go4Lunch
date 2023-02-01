@@ -3,5 +3,5 @@
     <dimen name="margin_short">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_large">32dp</dimen>
-    <dimen name="margin_extra_large">64dp</dimen>
+    <dimen name="margin_extra_large">86dp</dimen>
 </resources>
