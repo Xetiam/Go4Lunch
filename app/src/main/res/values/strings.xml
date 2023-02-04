@@ -8,4 +8,7 @@
     <string name="mail_button_text">SIGN IN WITH YOUR EMAIL</string>
     <string name="success_message">Connexion réussie</string>
     <string name="failure_message">Échec de connexion</string>
+
+    <!--MapBox public token-->
+    <string name="mapbox_access_token">pk.eyJ1IjoieGV0aWFtIiwiYSI6ImNsZGxxMmVpczAxc20zcXQ2dnZydW1oaGgifQ.Rg52v5HK3tOgfCg2K9icYA</string>
 </resources>
