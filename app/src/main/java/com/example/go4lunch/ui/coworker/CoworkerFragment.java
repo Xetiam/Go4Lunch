@@ -1,7 +1,7 @@
 package com.example.go4lunch.ui.coworker;
 
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 public class CoworkerFragment extends Fragment {
 }

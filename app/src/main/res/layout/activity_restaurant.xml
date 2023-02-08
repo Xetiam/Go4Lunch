@@ -4,13 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <fragment xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.RestaurantActivity" />
+
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/navBar"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@id/navBar"
@@ -26,30 +33,27 @@
 
             <Button
                 android:id="@+id/mapButton"
-                android:text="Map View"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                />
+                android:text="Map View" />
 
             <Button
                 android:id="@+id/listButton"
-                android:text="List View"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                />
+                android:text="List View" />
 
             <Button
                 android:id="@+id/coworkerButton"
-                android:text="Workmates"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                />
+                android:text="Workmates" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
