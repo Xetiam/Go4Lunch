@@ -43,15 +43,4 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
-/*
-    // Here is our "graph / tree" of injection : CatFactsRepository needs CatApi, and later on, CatFactsViewModel will need CatFactsRepository
-    private final CatFactsRepository catFactsRepository = new CatFactsRepository(
-            // We inject the CatApi in the Repository constructor
-            RetrofitService.getCatApi()
-    );
-
-    private ViewModelFactory() {
-    }*/
-
-
 }
