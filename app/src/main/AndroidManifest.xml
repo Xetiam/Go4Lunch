@@ -14,9 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Go4Lunch"
         tools:targetApi="31" >
-        <activity android:name=".ui.coworker.CoworkerActivity"/>
-        <activity android:name=".ui.restaurantlist.RestaurantListActivity"/>
-        <activity android:name=".ui.restaurantmap.RestaurantMapActivity"/>
+        <activity android:name=".ui.coworker.CoworkerFragment"/>
+        <activity android:name=".ui.restaurantlist.RestaurantListFragment"/>
+        <activity android:name=".ui.RestaurantActivity"/>
+        <activity android:name=".ui.restaurantmap.RestaurantMapFragment"/>
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">

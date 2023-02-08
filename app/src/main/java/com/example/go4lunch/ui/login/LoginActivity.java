@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModelFactory;
 import com.example.go4lunch.databinding.ActivityLoginBinding;
-import com.example.go4lunch.ui.restaurantmap.RestaurantMapActivity;
+import com.example.go4lunch.ui.RestaurantActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //MapboxAccountManager.start(this, getString(R.string.mapbox_access_token));
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -50,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     private void render(LoginViewState loginViewState) {
         if(loginViewState instanceof OnSignInSuccess){
             showConnexionMessage(getString(R.string.success_message));
-            goToRestaurantMap();
+            goToRestaurantActivity();
         }
         if(loginViewState instanceof OnSignInFailure){
             showConnexionMessage(getString(R.string.failure_message));
@@ -63,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    private void goToRestaurantMap() {
-        Intent intent = new Intent(this, RestaurantMapActivity.class);
+    private void goToRestaurantActivity() {
+        Intent intent = new Intent(this, RestaurantActivity.class);
         this.startActivity(intent);
     }
 
