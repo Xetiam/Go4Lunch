@@ -19,13 +19,15 @@ public class RetrofitService {
     }
 
 
-    public static GoForLunchApi getStaticMap() {
+    /*public static GoForLunchApi getStaticMap() {
         return retrofitRouteBuilder(retrofitRoute.MAP.getUrl()).create(GoForLunchApi.class);
-    }
+    }*/
 
     enum retrofitRoute {
+        //TODO: mise en place des appels à ma base de donnée mettant en relation coworkers, restaurants et leurs notes
+        //exemple de route :
         MAP("https://www.mapquestapi.com/staticmap/v5/getmap?size=1080,1920&type=map&zoom=7&center=39.740112,-104.984856&imagetype=JPEG&key=2tJV0L5cZZAcDG39Zh6YcJVJBlQ9tjnG");
-        //autre appel
+        //liste des routes des appels
 
         private final String url;
         retrofitRoute(String url) {

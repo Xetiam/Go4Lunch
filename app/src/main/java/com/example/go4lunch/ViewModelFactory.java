@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.go4lunch.ui.RestaurantViewModel;
 import com.example.go4lunch.ui.coworker.CoworkerViewModel;
 import com.example.go4lunch.ui.login.LoginViewModel;
 import com.example.go4lunch.ui.restaurantlist.RestaurantListViewModel;
@@ -42,10 +41,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(CoworkerViewModel.class)) {
             // We inject the Repository in the ViewModel constructor
             return (T) new CoworkerViewModel();
-        }
-        if (modelClass.isAssignableFrom(RestaurantViewModel.class)) {
-            // We inject the Repository in the ViewModel constructor
-            return (T) new RestaurantViewModel();
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

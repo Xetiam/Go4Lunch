@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.RestaurantActivity" />
-
     <LinearLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
@@ -37,7 +30,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="Map View" />
+                android:text="Map View"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/listButton"
@@ -45,7 +39,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="List View" />
+                android:text="List View"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/coworkerButton"
@@ -53,7 +48,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="Workmates" />
+                android:text="Workmates"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
