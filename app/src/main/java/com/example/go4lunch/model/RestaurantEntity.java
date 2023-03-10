@@ -1,22 +1,41 @@
 package com.example.go4lunch.model;
 
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-//TODO: Terminer la construction de l'objet lorsque j'en saurais plus sur les retours de GooglePlaces
 public class RestaurantEntity {
+    @SerializedName("id")
+    @Expose
+    private final String id;
+    @SerializedName("name")
+    @Expose
     private final String name;
+    @SerializedName("description")
+    @Expose
     private final String description;
     //private timeOpening;
+    @SerializedName("position")
+    @Expose
     private final LatLng position;
+    @SerializedName("coworkerStars")
+    @Expose
     private final List<Integer> coworkerStars;
+    @SerializedName("drawableUrl")
+    @Expose
     private final String drawableUrl;
 
-    public RestaurantEntity(String name,
+    public RestaurantEntity(String id,
+                            String name,
                             String description,
                             LatLng position,
-                            List<Integer> coworkerStars, String drawableUrl) {
+                            List<Integer> coworkerStars,
+                            String drawableUrl) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.position = position;
@@ -42,5 +61,9 @@ public class RestaurantEntity {
 
     public String getDrawableUrl() {
         return drawableUrl;
+    }
+
+    public String getId() {
+        return id;
     }
 }
