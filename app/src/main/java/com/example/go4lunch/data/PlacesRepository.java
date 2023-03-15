@@ -5,7 +5,6 @@ package com.example.go4lunch.data;
 import static com.example.go4lunch.BuildConfig.MAPS_API_KEY;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.go4lunch.data.pojo.PlacesNearbySearchResponse;
@@ -31,19 +30,20 @@ public class PlacesRepository {
         PlacesNearbySearchResponse response = alreadyFetchedResponse;
 
         if (response != null) {
-            placesMutableLiveData.setValue(response.formatPlaces());
+            placesMutableLiveData.setValue(response.toDomain());
         } else {
-            placesApi.getPlacesNearbySearch((userLocation.latitude
+            placesApi.getPlacesNearbySearch((userLocation.latitude//TODO: keyword pour récupérer plus d'information ?
                             + ","
                             + userLocation.longitude),
                     1500,
+                    false,
                     "restaurant",
                     MAPS_API_KEY).enqueue(new Callback<PlacesNearbySearchResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<PlacesNearbySearchResponse> call, @NonNull Response<PlacesNearbySearchResponse> response) {
                     if (response.body() != null) {
                         alreadyFetchedResponse = response.body();
-                        placesMutableLiveData.setValue(response.body().formatPlaces());
+                        placesMutableLiveData.setValue(response.body().toDomain());
                     }
                 }
 

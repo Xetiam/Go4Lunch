@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.R;
-import com.example.go4lunch.Utils.UserManager;
 import com.example.go4lunch.ViewModelFactory;
 import com.example.go4lunch.databinding.ActivityLoginBinding;
+import com.example.go4lunch.manager.UserManager;
 import com.example.go4lunch.ui.RestaurantActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;

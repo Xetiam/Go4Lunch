@@ -1,69 +1,88 @@
 package com.example.go4lunch.model;
 
-import android.os.Parcelable;
-
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import com.google.firebase.firestore.GeoPoint;
 
 public class RestaurantEntity {
-    @SerializedName("id")
-    @Expose
-    private final String id;
-    @SerializedName("name")
-    @Expose
-    private final String name;
-    @SerializedName("description")
-    @Expose
-    private final String description;
-    //private timeOpening;
-    @SerializedName("position")
-    @Expose
-    private final LatLng position;
-    @SerializedName("coworkerStars")
-    @Expose
-    private final List<Integer> coworkerStars;
-    @SerializedName("drawableUrl")
-    @Expose
-    private final String drawableUrl;
+    private String restaurantid;
+    private String restaurantname;
+    private String restaurantdescription;
+    private String openingHour;
+    private GeoPoint restaurantposition;
+    private Long evaluation;
+    private String drawableUrl;
 
-    public RestaurantEntity(String id,
-                            String name,
-                            String description,
-                            LatLng position,
-                            List<Integer> coworkerStars,
+    public RestaurantEntity(String restaurantid,
+                            String restaurantname,
+                            String restaurantdescription,
+                            String openingHour,
+                            GeoPoint restaurantposition,
+                            Long evaluation,
                             String drawableUrl) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.position = position;
-        this.coworkerStars = coworkerStars;
+        this.restaurantid = restaurantid;
+        this.restaurantname = restaurantname;
+        this.restaurantdescription = restaurantdescription;
+        this.openingHour = openingHour;
+        this.restaurantposition = restaurantposition;
+        this.evaluation = evaluation;
         this.drawableUrl = drawableUrl;
     }
 
-    public String getName() {
-        return name;
+    public RestaurantEntity() {}
+
+    public String getRestaurantid() {
+        return restaurantid;
     }
 
-    public String getDescription() {
-        return description;
+    public void setRestaurantid(String restaurantid) {
+        this.restaurantid = restaurantid;
     }
 
-    public LatLng getPosition() {
-        return position;
+    public String getRestaurantname() {
+        return restaurantname;
     }
 
-    public List<Integer> getCoworkerStars() {
-        return coworkerStars;
+    public void setRestaurantname(String restaurantname) {
+        this.restaurantname = restaurantname;
+    }
+
+    public String getRestaurantdescription() {
+        return restaurantdescription;
+    }
+
+    public void setRestaurantdescription(String restaurantdescription) {
+        this.restaurantdescription = restaurantdescription;
+    }
+
+    public LatLng getRestaurantposition() {
+        return new LatLng(restaurantposition.getLatitude(), restaurantposition.getLongitude());
+    }
+
+    public void setRestaurantposition(GeoPoint restaurantposition) {
+        this.restaurantposition = restaurantposition;
+    }
+
+    public Long getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(Long evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public String getOpeningHour() {
+        return openingHour;
+    }
+
+    public void setOpeningHour(String openingHour) {
+        this.openingHour = openingHour;
     }
 
     public String getDrawableUrl() {
         return drawableUrl;
     }
 
-    public String getId() {
-        return id;
+    public void setDrawableUrl(String drawableUrl) {
+        this.drawableUrl = drawableUrl;
     }
 }

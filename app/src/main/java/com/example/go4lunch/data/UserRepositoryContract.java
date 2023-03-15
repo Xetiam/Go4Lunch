@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public interface UserRepositoryContract {
     //TODO : task -> utilisation des callback
-    //FirebaseUser -> User perso
+    //TODO : FirebaseUser -> User perso
     FirebaseUser getCurrentUser();
     String getCurrentUserUID();
     void createUser();

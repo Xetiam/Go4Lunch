@@ -22,7 +22,6 @@ public class UserManager {
     }
 
     public Boolean isCurrentUserLogged() { return (userRepository.getCurrentUser() != null); }
-    public FirebaseUser getCurrentUser() { return userRepository.getCurrentUser(); }
     public Task<Void> signOut(Context context) { return userRepository.signOut(context); }
     public void createUser(){
         userRepository.createUser();

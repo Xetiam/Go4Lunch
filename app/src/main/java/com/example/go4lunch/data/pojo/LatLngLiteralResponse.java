@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LatLngLiteralResponse {
     @JsonProperty("lat")
-    int lat;
+    Double lat;
     @JsonProperty("lng")
-    int lng;
+    Double lng;
 }

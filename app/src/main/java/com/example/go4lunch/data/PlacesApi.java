@@ -11,6 +11,7 @@ public interface PlacesApi {
     @GET("nearbysearch/json?")
     Call<PlacesNearbySearchResponse> getPlacesNearbySearch(@Query("location") String userLocation,
                                                            @Query("radius") int radius,
+                                                           @Query("sensor") Boolean sensor,
                                                            @Query("type") String typeSearch,
                                                            @Query("key") String apiKey);
 }

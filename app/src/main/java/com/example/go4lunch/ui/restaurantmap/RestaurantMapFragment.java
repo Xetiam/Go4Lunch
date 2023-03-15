@@ -47,12 +47,14 @@ public class RestaurantMapFragment extends Fragment
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map_view);
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantMapViewModel.class);
+        viewModel.state.observe(getViewLifecycleOwner(), this::render);
         Objects.requireNonNull(supportMapFragment).getMapAsync(this);
         return binding.getRoot();
     }
     private void render(RestaurantMapViewState restaurantMapViewState) {
         if(restaurantMapViewState instanceof WithResponseState){
             WithResponseState state = (WithResponseState) restaurantMapViewState;
+            //TODO: afficher les pins des restau à proximité
             List<RestaurantEntity> test = state.getRestaurants();
         }
     }
@@ -91,7 +93,7 @@ public class RestaurantMapFragment extends Fragment
                         googleMap.clear();
                         googleMap.addMarker(new MarkerOptions().position(userPosition).title("Vous êtes ici"));
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPosition,10F));
-                        viewModel.getResponseLiveData(userPosition).observe(getViewLifecycleOwner(), this::render);
+                        viewModel.getResponseLiveData(userPosition);
                     }
                 });
     }

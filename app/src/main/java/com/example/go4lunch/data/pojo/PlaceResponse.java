@@ -71,7 +71,7 @@ public class PlaceResponse {
     int priceLevel;
     @JsonProperty("rating")
     @Expose
-    int rating;
+    Double rating;
     @JsonProperty("reservable")
     @Expose
     Boolean reservable;
@@ -126,10 +126,4 @@ public class PlaceResponse {
 
     @JsonProperty("wheelchair_accessible_entrance")
     Boolean wheelchairAccessibleEntrance;
-    public Boolean getWheelchairAccessibleEntrance() {
-        return this.wheelchairAccessibleEntrance;
-    }
-    public void setWheelchairAccessibleEntrance(Boolean wheelchairAccessibleEntrance) {
-        this.wheelchairAccessibleEntrance = wheelchairAccessibleEntrance;
-    }
 }

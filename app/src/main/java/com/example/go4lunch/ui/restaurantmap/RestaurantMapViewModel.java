@@ -19,23 +19,26 @@ import java.util.List;
 public class RestaurantMapViewModel extends ViewModel {
 
     private PlacesRepository placesRepository;
-    private LiveData<WithResponseState> responseLiveData;
+    private MutableLiveData<RestaurantMapViewState> _state = new MutableLiveData<>();
+    LiveData<RestaurantMapViewState> state = _state;
 
     public RestaurantMapViewModel(PlacesRepository placesRepository) {
         this.placesRepository = placesRepository;
-        responseLiveData = new MutableLiveData<>();
     }
 
 
-    public LiveData<WithResponseState> getResponseLiveData(LatLng userPosition) {
-        return responseLiveData = Transformations.map(placesRepository.getPlacesLiveData(userPosition),
-                restaurants ->
-                        mapDataToViewState(restaurants,userPosition)
-
+    public void getResponseLiveData(LatLng userPosition) {
+         LiveData<WithResponseState> responseLiveData = Transformations.map(placesRepository.getPlacesLiveData(userPosition),
+                 this::mapDataToViewState
         );
+         responseLiveData.observeForever(this::setStateOnResponse);
     }
 
-    private WithResponseState mapDataToViewState(List<RestaurantEntity> restaurants, LatLng userPosition) {
+    private void setStateOnResponse(WithResponseState withResponseState) {
+        _state.setValue(withResponseState);
+    }
+
+    private WithResponseState mapDataToViewState(List<RestaurantEntity> restaurants) {
         List<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
         if(restaurants != null) {
             fetchedRestaurants = restaurants;

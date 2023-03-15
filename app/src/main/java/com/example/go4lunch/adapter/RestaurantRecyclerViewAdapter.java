@@ -9,11 +9,12 @@ import com.example.go4lunch.databinding.ItemRestaurantRecyclerViewBinding;
 import com.example.go4lunch.model.RestaurantEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<RestaurantRecyclerViewAdapter.ViewHolder> {
-    public ArrayList<RestaurantEntity> restaurants;
+    public List<RestaurantEntity> restaurants;
 
-    public RestaurantRecyclerViewAdapter(ArrayList<RestaurantEntity> restaurants) {
+    public RestaurantRecyclerViewAdapter(List<RestaurantEntity> restaurants) {
         this.restaurants = restaurants;
     }
 
@@ -27,13 +28,15 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
     @Override
     public void onBindViewHolder(@NonNull RestaurantRecyclerViewAdapter.ViewHolder holder, final int position) {
         RestaurantEntity restaurantEntity = restaurants.get(position);
-        holder.binding.restaurantName.setText(restaurantEntity.getName());
-        holder.binding.restaurantDescription.setText(restaurantEntity.getDescription());
+        holder.binding.restaurantName.setText(restaurantEntity.getRestaurantname());
+        holder.binding.restaurantDescription.setText(restaurantEntity.getRestaurantdescription());
+        //TODO: calculer la distance entre deux points
         //holder.binding.restaurantDistance.setText(stringDistanceFormatter(restaurantEntity.getPosition()));
-        //holder.binding.restaurantOpeningTime.setText(stringOpeningTimeFormatter(restaurantEntity.getOpeningTime()));
+        holder.binding.restaurantOpeningTime.setText(restaurantEntity.getOpeningHour());
         //holder.binding.starNotation.
-        String stringReco = "("+restaurantEntity.getCoworkerStars().size()+")";
-        holder.binding.restaurantRecommandation.setText(stringReco);
+        //String stringReco = "("+restaurantEntity.getRCoworkerStars()+")";
+        //holder.binding.restaurantRecommandation.setText(stringReco);
+        //TODO: ImageLoader -> afficher l'image du restau
         //holder.binding.restaurantPicture.setImageDrawable(restaurantEntity.getDrawableUrl());
     }
 
