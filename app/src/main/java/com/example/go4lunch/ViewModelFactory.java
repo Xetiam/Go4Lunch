@@ -25,7 +25,6 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     private ViewModelFactory() {
     }
     private final PlacesRepository placesRepository = new PlacesRepository(
-            // We inject the CatApi in the Repository constructor
             RetrofitService.getPlacesApi()
     );
 
@@ -47,5 +46,4 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
-
 }
