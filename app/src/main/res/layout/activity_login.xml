@@ -6,7 +6,6 @@
 
     <Button
         android:id="@+id/fb_signin_button"
-        android:backgroundTint="@color/com_facebook_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
