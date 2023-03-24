@@ -3,9 +3,12 @@ import static com.example.go4lunch.BuildConfig.MAPS_API_KEY;
 import static com.google.maps.android.SphericalUtil.computeDistanceBetween;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -17,6 +20,8 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.databinding.ItemRestaurantRecyclerViewBinding;
 import com.example.go4lunch.manager.UserManager;
 import com.example.go4lunch.model.RestaurantEntity;
+import com.example.go4lunch.ui.restaurantdetail.RestaurantDetailActivity;
+import com.example.go4lunch.utils.IntentHelper;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
@@ -57,6 +62,10 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
                 .load(picUrl)
                 .placeholder(R.drawable.sharp_image_24)
                 .into(holder.binding.restaurantPicture);
+        holder.binding.getRoot().setOnClickListener(view -> {
+            IntentHelper helper = new IntentHelper();
+            helper.goToRestaurantDetail(context,restaurantEntity);
+        });
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

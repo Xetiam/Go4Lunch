@@ -1,6 +1,8 @@
 package com.example.go4lunch.ui.restaurantmap;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModelFactory;
 import com.example.go4lunch.databinding.FragmentRestaurantMapBinding;
 import com.example.go4lunch.model.RestaurantEntity;
+import com.example.go4lunch.ui.restaurantdetail.RestaurantDetailActivity;
+import com.example.go4lunch.utils.IntentHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
@@ -26,10 +30,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationToken;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +43,7 @@ public class RestaurantMapFragment extends Fragment
         implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private RestaurantMapViewModel viewModel;
-
+    private List<RestaurantEntity> restaurants = new ArrayList<>();
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,13 +55,25 @@ public class RestaurantMapFragment extends Fragment
         Objects.requireNonNull(supportMapFragment).getMapAsync(this);
         return binding.getRoot();
     }
+    @SuppressLint("PotentialBehaviorOverride")
     private void render(RestaurantMapViewState restaurantMapViewState) {
         if(restaurantMapViewState instanceof WithResponseState){
             WithResponseState state = (WithResponseState) restaurantMapViewState;
-            List<RestaurantEntity> test = state.getRestaurants();
-            for(RestaurantEntity restaurant: test) {
-                googleMap.addMarker(new MarkerOptions().position(restaurant.getRestaurantposition()).title(restaurant.getRestaurantname()));
+            restaurants = state.getRestaurants();
+            for(RestaurantEntity restaurant: restaurants) {
+                googleMap.addMarker(new MarkerOptions()
+                        .position(restaurant.getRestaurantposition())
+                        .title(restaurant.getRestaurantname()));
             }
+            googleMap.setOnMarkerClickListener(marker -> {
+                for(RestaurantEntity restaurant: restaurants){
+                    if(marker.getPosition().equals(restaurant.getRestaurantposition())){
+                        IntentHelper helper = new IntentHelper();
+                        helper.goToRestaurantDetail(requireActivity(), restaurant);
+                    }
+                }
+                return true;
+            });
         }
     }
 

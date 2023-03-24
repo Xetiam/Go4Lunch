@@ -1,7 +1,6 @@
 package com.example.go4lunch.data;
 
 
-
 import static com.example.go4lunch.BuildConfig.MAPS_API_KEY;
 
 import androidx.annotation.NonNull;
@@ -43,7 +42,9 @@ public class PlacesRepository {
                 public void onResponse(@NonNull Call<PlacesNearbySearchResponse> call, @NonNull Response<PlacesNearbySearchResponse> response) {
                     if (response.body() != null) {
                         alreadyFetchedResponse = response.body();
+                        //TODO: prendre que les place_id sous forme de liste
                         placesMutableLiveData.setValue(response.body().toDomain());
+                        //TODO: placesDetails -> pour les opening hours + type + phone + website (écran d'activity détails finalement)
                     }
                 }
 

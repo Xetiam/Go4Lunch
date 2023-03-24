@@ -1,11 +1,8 @@
 package com.example.go4lunch.ui.restaurantmap;
 
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
@@ -32,10 +29,10 @@ public class RestaurantMapViewModel extends ViewModel {
 
 
     public void getResponseLiveData(LatLng userPosition) {
-         LiveData<WithResponseState> responseLiveData = Transformations.map(placesRepository.getPlacesLiveData(userPosition),
-                 this::mapDataToViewState
+        LiveData<WithResponseState> responseLiveData = Transformations.map(placesRepository.getPlacesLiveData(userPosition),
+                this::mapDataToViewState
         );
-         responseLiveData.observeForever(this::setStateOnResponse);
+        responseLiveData.observeForever(this::setStateOnResponse);
     }
 
     private void setStateOnResponse(WithResponseState withResponseState) {

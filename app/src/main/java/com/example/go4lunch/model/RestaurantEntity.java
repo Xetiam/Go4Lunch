@@ -2,13 +2,17 @@ package com.example.go4lunch.model;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.gson.annotations.SerializedName;
 
-public class RestaurantEntity {
+import java.io.Serializable;
+
+public class RestaurantEntity implements Serializable {
     private String restaurantid;
     private String restaurantname;
     private String restaurantdescription;
     private String openingHour;
-    private GeoPoint restaurantposition;
+    private double restaurantpositionlat;
+    private double restaurantpositionlng;
     private Long evaluation;
     private String drawableUrl;
 
@@ -23,7 +27,8 @@ public class RestaurantEntity {
         this.restaurantname = restaurantname;
         this.restaurantdescription = restaurantdescription;
         this.openingHour = openingHour;
-        this.restaurantposition = restaurantposition;
+        this.restaurantpositionlat = restaurantposition.getLatitude();
+        this.restaurantpositionlng = restaurantposition.getLongitude();
         this.evaluation = evaluation;
         this.drawableUrl = drawableUrl;
     }
@@ -55,11 +60,12 @@ public class RestaurantEntity {
     }
 
     public LatLng getRestaurantposition() {
-        return new LatLng(restaurantposition.getLatitude(), restaurantposition.getLongitude());
+        return new LatLng(restaurantpositionlat, restaurantpositionlng);
     }
 
     public void setRestaurantposition(GeoPoint restaurantposition) {
-        this.restaurantposition = restaurantposition;
+        this.restaurantpositionlat = restaurantposition.getLatitude();
+        this.restaurantpositionlng = restaurantposition.getLongitude();
     }
 
     public Long getEvaluation() {

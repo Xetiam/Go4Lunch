@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToRestaurantActivity() {
-        Intent intent = new Intent(this, RestaurantActivity.class);
+        Intent intent = new Intent(this, RestaurantActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         this.startActivity(intent);
     }
 
