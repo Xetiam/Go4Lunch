@@ -2,19 +2,16 @@ package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class PlaceOpeningHoursPeriodDetailResponse {
-    @JsonProperty("day")
-    @Expose
+    @SerializedName("day")
     int day;
-    @JsonProperty("time")
-    @Expose
+    @SerializedName("time")
     String time;
-    @JsonProperty("date")
-    @Expose
+    @SerializedName("date")
     String date;
-    @JsonProperty("truncated")
-    @Expose
+    @SerializedName("truncated")
     Boolean truncated;
 
 }

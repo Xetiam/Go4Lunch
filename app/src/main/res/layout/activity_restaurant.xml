@@ -6,9 +6,11 @@
 
     <LinearLayout
         android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/navBar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="Map View"
+                android:text="@string/map_view_navigation_bar"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -39,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="List View"
+                android:text="@string/list_view_navigation_bar"
                 style="?android:attr/buttonBarButtonStyle" />
 
             <Button
@@ -48,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_short"
                 android:layout_weight="1"
-                android:text="Workmates"
+                android:text="@string/workmates_navigation_bar"
                 style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

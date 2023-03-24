@@ -6,12 +6,12 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="fill_horizontal">
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_weight="1"
             android:orientation="vertical">
@@ -19,49 +19,62 @@
                 android:id="@+id/restaurant_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_medium"
                 tools:text="Nom du restaurant"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/restaurant_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_medium"
                 tools:text="Type : Adresse du restaurant"/>
             <TextView
                 android:id="@+id/restaurant_opening_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
                 tools:text="12h-14h" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginVertical="@dimen/margin_medium"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/restaurant_distance"
                 tools:text="XXXm"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:textColor="@color/mail_gray"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/restaurant_recommandation"
                 tools:text="(X)"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/outline_person_24" />
             <LinearLayout
                 android:id="@+id/star_notation"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal" />
         </LinearLayout>
         <ImageView
             android:id="@+id/restaurant_picture"
             android:src="@drawable/sharp_image_24"
-            android:layout_gravity="fill_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_short"
+            android:scaleType="centerCrop"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

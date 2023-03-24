@@ -8,4 +8,7 @@
     <string name="mail_button_text">SIGN IN WITH YOUR EMAIL</string>
     <string name="success_message">Connexion réussie</string>
     <string name="failure_message">Échec de connexion</string>
+    <string name="map_view_navigation_bar">Map View</string>
+    <string name="list_view_navigation_bar">List View</string>
+    <string name="workmates_navigation_bar">Workmates</string>
 </resources>

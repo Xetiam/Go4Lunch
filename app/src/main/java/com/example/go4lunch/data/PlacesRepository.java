@@ -32,7 +32,7 @@ public class PlacesRepository {
         if (response != null) {
             placesMutableLiveData.setValue(response.toDomain());
         } else {
-            placesApi.getPlacesNearbySearch((userLocation.latitude//TODO: keyword pour récupérer plus d'information ?
+            placesApi.getPlacesNearbySearch((userLocation.latitude
                             + ","
                             + userLocation.longitude),
                     1500,

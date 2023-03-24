@@ -1,11 +1,12 @@
 package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class PlaceEditorialSummaryResponse {
-    @JsonProperty("language")
+    @SerializedName("language")
     String language;
-    @JsonProperty("overview")
+    @SerializedName("overview")
     String overview;
 
 }
