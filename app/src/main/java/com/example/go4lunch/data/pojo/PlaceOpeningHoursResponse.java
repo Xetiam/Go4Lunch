@@ -2,23 +2,19 @@ package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class PlaceOpeningHoursResponse {
-    @JsonProperty("open_now")
-    @Expose
+    @SerializedName("open_now")
     Boolean openNow;
-    @JsonProperty("periods")
-    @Expose
+    @SerializedName("periods")
     ArrayList<PlaceOpeningHoursPeriodResponse> periods;
-    @JsonProperty("special_days")
-    @Expose
+    @SerializedName("special_days")
     ArrayList<PlaceSpecialDayResponse> specialDays;
-    @JsonProperty("types")
-    @Expose
+    @SerializedName("types")
     ArrayList<String> types;
-    @JsonProperty("weekday_text")
-    @Expose
+    @SerializedName("weekday_text")
     ArrayList<String> weekdayText;
 }

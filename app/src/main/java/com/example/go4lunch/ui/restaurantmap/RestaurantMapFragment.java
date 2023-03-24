@@ -37,13 +37,11 @@ public class RestaurantMapFragment extends Fragment
         implements OnMapReadyCallback {
     private GoogleMap googleMap;
     private RestaurantMapViewModel viewModel;
-    private FragmentRestaurantMapBinding binding;
-    private FusedLocationProviderClient provider;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentRestaurantMapBinding.inflate(inflater);
+        com.example.go4lunch.databinding.FragmentRestaurantMapBinding binding = FragmentRestaurantMapBinding.inflate(inflater);
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map_view);
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantMapViewModel.class);
@@ -54,8 +52,10 @@ public class RestaurantMapFragment extends Fragment
     private void render(RestaurantMapViewState restaurantMapViewState) {
         if(restaurantMapViewState instanceof WithResponseState){
             WithResponseState state = (WithResponseState) restaurantMapViewState;
-            //TODO: afficher les pins des restau à proximité
             List<RestaurantEntity> test = state.getRestaurants();
+            for(RestaurantEntity restaurant: test) {
+                googleMap.addMarker(new MarkerOptions().position(restaurant.getRestaurantposition()).title(restaurant.getRestaurantname()));
+            }
         }
     }
 
@@ -75,7 +75,7 @@ public class RestaurantMapFragment extends Fragment
             );
             return;
         }
-        provider = LocationServices.getFusedLocationProviderClient(requireActivity());
+        FusedLocationProviderClient provider = LocationServices.getFusedLocationProviderClient(requireActivity());
         provider.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, new CancellationToken() {
                     @Override
                     public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
@@ -91,8 +91,9 @@ public class RestaurantMapFragment extends Fragment
                     if (location != null) {
                         LatLng userPosition = new LatLng(location.getLatitude(), location.getLongitude());
                         googleMap.clear();
-                        googleMap.addMarker(new MarkerOptions().position(userPosition).title("Vous êtes ici"));
-                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPosition,10F));
+                        googleMap.setMyLocationEnabled(true);
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userPosition,15F));
+                        googleMap.getUiSettings().setCompassEnabled(true);
                         viewModel.getResponseLiveData(userPosition);
                     }
                 });

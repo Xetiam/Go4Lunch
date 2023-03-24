@@ -2,36 +2,27 @@ package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class PlaceReviewResponse {
-    @JsonProperty("author_name")
-    @Expose
+    @SerializedName("author_name")
     String authorName;
-    @JsonProperty("rating")
-    @Expose
+    @SerializedName("rating")
     int rating;
-    @JsonProperty("relative_time_description")
-    @Expose
+    @SerializedName("relative_time_description")
     String relativeTimeDescription;
-    @JsonProperty("time")
-    @Expose
+    @SerializedName("time")
     int time;
-    @JsonProperty("author_url")
-    @Expose
+    @SerializedName("author_url")
     String authorUrl;
-    @JsonProperty("language")
-    @Expose
+    @SerializedName("language")
     String language;
-    @JsonProperty("original_language")
-    @Expose
+    @SerializedName("original_language")
     String originalLanguage;
-    @JsonProperty("profile_photo_url")
-    @Expose
+    @SerializedName("profile_photo_url")
     String profilePhotoUrl;
-    @JsonProperty("text")
-    @Expose
+    @SerializedName("text")
     String text;
-    @JsonProperty("translated")
-    @Expose
+    @SerializedName("translated")
     Boolean translated;
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.data.PlacesRepository;
+import com.example.go4lunch.data.RestaurantRepository;
 import com.example.go4lunch.data.RetrofitService;
 import com.example.go4lunch.ui.coworker.CoworkerViewModel;
 import com.example.go4lunch.ui.login.LoginViewModel;

@@ -5,62 +5,66 @@ import com.example.go4lunch.model.RestaurantEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class PlacesNearbySearchResponse {
-    @JsonProperty("html_attributions")
-    @Expose
+    @SerializedName("html_attributions")
     ArrayList<String> attributions;
-    @JsonProperty("results")
-    @Expose
+    @SerializedName("results")
     ArrayList<PlaceResponse> results;
-    @JsonProperty("status")
-    @Expose
+    @SerializedName("status")
     String status;
-    @JsonProperty("error_message")
-    @Expose
+    @SerializedName("error_message")
     String error;
-    @JsonProperty("info_messages")
-    @Expose
+    @SerializedName("info_messages")
     ArrayList<String> infos;
-    @JsonProperty("next_page_token")
-    @Expose
+    @SerializedName("next_page_token")
     String nextPageToken;
+
     public List<RestaurantEntity> toDomain() {
         List<RestaurantEntity> formattedPlaces = new ArrayList<>();
-        for(PlaceResponse place : this.results) {
-            String restaurantDescritption;
-            //TODO : Il manque des données dans le retour de l'appel (googlemap a plus d'info)
-            if(place.editorialSummary != null) {
-                restaurantDescritption = place.editorialSummary.overview+" - "+place.vicinity;
-            } else {
-                restaurantDescritption = place.vicinity;
+        String restaurantDescritption;
+        String restaurantName;
+        GeoPoint restaurantGeoPoint;
+        String restaurantPhoto;
+        String restaurantOpeningHour;
+        for (PlaceResponse place : this.results) {
+            restaurantDescritption = "";
+            restaurantName = "";
+            restaurantGeoPoint = null;
+            restaurantPhoto = "";
+            if (place.businessStatus.contains("OPERATIONAL")) {
+                if (place.openingHours != null && place.openingHours.openNow) {
+                    restaurantOpeningHour = "Ouvert";
+                } else {
+                    restaurantOpeningHour = "Fermé";
+                }
+                if (place.vicinity != null) {
+                    restaurantDescritption = "Type - " + place.vicinity.substring(0, place.vicinity.indexOf(",") - 1);
+                }
+                if (place.name != null) {
+                    restaurantName = place.name;
+                }
+                if (place.geometry.location != null) {
+                    restaurantGeoPoint = new GeoPoint(place.geometry.location.lat, place.geometry.location.lng);
+                }
+                if (place.photos != null) {
+                    restaurantPhoto = place.photos.get(0).photoReference;
+                }
+                formattedPlaces.add(new RestaurantEntity(place.placeId,
+                        restaurantName,
+                        restaurantDescritption,
+                        restaurantOpeningHour,
+                        restaurantGeoPoint,
+                        3L,
+                        restaurantPhoto));
             }
-
-            String openingHour;
-            if(place.openingHours.openNow){//TODO : ne pas formatter le message ici et passé toute les horaire à Firestore
-                openingHour = "Ouvert jusqu'à " /*formatter heure de fermeture + soon close en string*/;
-            } else {
-                openingHour = "Fermé";
-            }
-
-            String drawableUrl;
-            if(place.photos.get(0) != null) {
-                drawableUrl = place.photos.get(0).photoReference;
-            } else {
-                drawableUrl = "";
-            }
-            formattedPlaces.add(new RestaurantEntity(place.placeId,
-                    place.name,
-                    restaurantDescritption,
-                    openingHour,
-                    new GeoPoint(place.geometry.location.lat, place.geometry.location.lng),
-                    0L,
-                    drawableUrl));
         }
+
         return formattedPlaces;
     }
 }

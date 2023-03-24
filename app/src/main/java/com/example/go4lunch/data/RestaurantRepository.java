@@ -20,6 +20,8 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     private static final String RESTAURANT_DESCRIPTION_FIELD = "restaurantdescription";
     private static final String RESTAURANT_POSITION_FIELD = "restaurantposition";
     private static final String RESTAURANT_EVALUATIONS_FIELDS = "restaurantevaluations";
+    private static final String RESTAURANT_OPENING_HOURS_FIELDS = "restaurantopeninghours";
+    private static final String RESTAURANT_PICTURE_URL = "restaurantpictureurl";
     private static final String RESTAURANT_ID = "restaurantid";
     private static volatile RestaurantRepository instance;
 
@@ -34,39 +36,19 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     public void getRestaurantsTask(FirestoreCallback callback) {
         CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
         reference.get().addOnSuccessListener(queryDocumentSnapshots -> {
-            List<DocumentSnapshot> test = queryDocumentSnapshots.getDocuments();
-            List<String> ids = new ArrayList<>();
-            List<Long> evals = new ArrayList<>();
-            List<String> descriptions = new ArrayList<>();
-            List<String> names = new ArrayList<>();
-            List<String> pictures = new ArrayList<>();
-            List<GeoPoint> positions = new ArrayList<>();
-            List<String> openingHours = new ArrayList<>();
+            List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
             List<RestaurantEntity> entities = new ArrayList<>();
-            for (DocumentSnapshot documentSnapshot : test) {
-                if (documentSnapshot != null) {
-                    for (Map.Entry<String, Object> entry : Objects.requireNonNull(documentSnapshot.getData()).entrySet()) {
-                        switch(entry.getKey()){//TODO : switch fonctionne pas alors que if/elseif oui
-                            case "restaurantid" : ids.add((String) entry.getValue());
-                            case "evaluation" : evals.add((Long) entry.getValue());
-                            case "restaurantdescription" : descriptions.add((String) entry.getValue());
-                            case "restaurantname" : names.add((String) entry.getValue());
-                            case "restaurantposition" : positions.add((GeoPoint) entry.getValue());
-                            case "restaurantopening" : openingHours.add((String) entry.getValue());
-                            case "restaurantpicture" : pictures.add((String) entry.getValue());
-                        }
-                    }
-                }
-                for (int i = 0; i < ids.size(); i++) {
-                    entities.add(new RestaurantEntity(
-                            ids.get(i),
-                            names.get(i),
-                            descriptions.get(i),
-                            openingHours.get(i),
-                            positions.get(i),
-                            evals.get(i),
-                            pictures.get(i))
-                    );
+            for (DocumentSnapshot documentSnapshot : documents) {
+                Map<String,Object> document = documentSnapshot.getData();
+                if (document != null) {
+                    String id = (String) document.get(RESTAURANT_ID);
+                    Long eval = (Long) document.get(RESTAURANT_EVALUATIONS_FIELDS);
+                    String description = (String) document.get(RESTAURANT_DESCRIPTION_FIELD);
+                    String name = (String) document.get(RESTAURANT_NAME_FIELD);
+                    GeoPoint position = (GeoPoint) document.get(RESTAURANT_POSITION_FIELD);
+                    String openingHour = (String) document.get(RESTAURANT_OPENING_HOURS_FIELDS);
+                    String picture = (String) document.get(RESTAURANT_PICTURE_URL);
+                    entities.add(new RestaurantEntity(id,name,description,openingHour,position,eval,picture));
                 }
             }
             callback.restaurantsCallback(entities);
@@ -75,20 +57,19 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
         });
     }
 
-    public void createRestaurant(String name,
-                                 String description,
-                                 LatLng position,
-                                 List<Integer> evaluations,
-                                 String id) {
+    public void createRestaurant(ArrayList<RestaurantEntity> restaurantEntities) {
         Map<String, Object> data1 = new HashMap<>();
-        data1.put(RESTAURANT_ID, id);
-        data1.put(RESTAURANT_DESCRIPTION_FIELD, description);
-        data1.put(RESTAURANT_EVALUATIONS_FIELDS, evaluations);
-        data1.put(RESTAURANT_POSITION_FIELD, position);
-        data1.put(RESTAURANT_NAME_FIELD, name);
-
-        CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
-        reference.document(id).set(data1);
+        for(RestaurantEntity restaurant: restaurantEntities){
+            data1.put(RESTAURANT_ID, restaurant.getRestaurantid());
+            data1.put(RESTAURANT_NAME_FIELD, restaurant.getRestaurantname());
+            data1.put(RESTAURANT_POSITION_FIELD, new GeoPoint(restaurant.getRestaurantposition().latitude, restaurant.getRestaurantposition().longitude));
+            data1.put(RESTAURANT_DESCRIPTION_FIELD, restaurant.getRestaurantdescription());
+            data1.put(RESTAURANT_EVALUATIONS_FIELDS, restaurant.getEvaluation());
+            data1.put(RESTAURANT_OPENING_HOURS_FIELDS, restaurant.getOpeningHour());
+            data1.put(RESTAURANT_PICTURE_URL, restaurant.getDrawableUrl());
+            CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+            reference.document(restaurant.getRestaurantid()).set(data1);
+        }
     }
 }
 

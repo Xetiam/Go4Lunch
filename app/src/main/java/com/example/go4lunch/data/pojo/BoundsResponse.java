@@ -1,10 +1,11 @@
 package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class BoundsResponse {
-    @JsonProperty("northeast")
+    @SerializedName("northeast")
     LatLngLiteralResponse northeast;
-    @JsonProperty("southwest")
+    @SerializedName("southwest")
     LatLngLiteralResponse southwest;
 }

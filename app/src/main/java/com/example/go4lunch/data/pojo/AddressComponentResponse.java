@@ -1,12 +1,13 @@
 package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class AddressComponentResponse {
-    @JsonProperty("long_name")
+    @SerializedName("long_name")
     String longName;
-    @JsonProperty("short_name")
+    @SerializedName("short_name")
     String shortName;
-    @JsonProperty("types")
+    @SerializedName("types")
     String types;
 }

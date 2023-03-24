@@ -10,6 +10,8 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.go4lunch.data.PlacesRepository;
+import com.example.go4lunch.data.RestaurantRepository;
+import com.example.go4lunch.data.RestaurantRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -18,12 +20,14 @@ import java.util.List;
 
 public class RestaurantMapViewModel extends ViewModel {
 
-    private PlacesRepository placesRepository;
-    private MutableLiveData<RestaurantMapViewState> _state = new MutableLiveData<>();
+    private final PlacesRepository placesRepository;
+    private final RestaurantRepositoryContract restaurantRepository;
+    private final MutableLiveData<RestaurantMapViewState> _state = new MutableLiveData<>();
     LiveData<RestaurantMapViewState> state = _state;
 
     public RestaurantMapViewModel(PlacesRepository placesRepository) {
         this.placesRepository = placesRepository;
+        this.restaurantRepository = new RestaurantRepository();
     }
 
 
@@ -39,10 +43,8 @@ public class RestaurantMapViewModel extends ViewModel {
     }
 
     private WithResponseState mapDataToViewState(List<RestaurantEntity> restaurants) {
-        List<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
-        if(restaurants != null) {
-            fetchedRestaurants = restaurants;
-        }
-        return new WithResponseState(fetchedRestaurants);
+        ArrayList<RestaurantEntity> fetchedRestaurants = (ArrayList<RestaurantEntity>) restaurants;
+        restaurantRepository.createRestaurant(fetchedRestaurants);
+        return new WithResponseState(restaurants);
     }
 }

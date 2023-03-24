@@ -8,14 +8,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface RestaurantRepositoryContract {
     void getRestaurantsTask(FirestoreCallback callback);
-    void createRestaurant(String name,
-                                 String description,
-                                 LatLng position,
-                                 List<Integer> evaluations,
-                                 String id);
+    void createRestaurant(ArrayList<RestaurantEntity> restaurantEntities);
 
 }

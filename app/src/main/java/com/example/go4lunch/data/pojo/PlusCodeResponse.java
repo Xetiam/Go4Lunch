@@ -1,10 +1,11 @@
 package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class PlusCodeResponse {
-    @JsonProperty("global_code")
+    @SerializedName("global_code")
     String globalCode;
-    @JsonProperty("compound_code")
+    @SerializedName("compound_code")
     String compoundCode;
 }

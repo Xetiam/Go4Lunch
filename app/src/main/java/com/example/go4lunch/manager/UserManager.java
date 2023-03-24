@@ -5,11 +5,10 @@ import android.content.Context;
 import com.example.go4lunch.data.UserRepository;
 import com.example.go4lunch.model.UserEntity;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 
 public class UserManager {
    private static volatile UserManager instance;
-   private UserRepository userRepository;
+   private final UserRepository userRepository;
 
    private UserManager(){ userRepository = UserRepository.getInstance(); }
 

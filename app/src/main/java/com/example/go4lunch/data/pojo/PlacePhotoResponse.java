@@ -2,20 +2,17 @@ package com.example.go4lunch.data.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
 public class PlacePhotoResponse {
-    @JsonProperty("height")
-    @Expose
+    @SerializedName("height")
     int height;
-    @JsonProperty("html_attributions")
-    @Expose
+    @SerializedName("html_attributions")
     ArrayList<String> htmlAttributions;
-    @JsonProperty("photo_reference")
-    @Expose
+    @SerializedName("photo_reference")
     String photoReference;
-    @JsonProperty("width")
-    @Expose
+    @SerializedName("width")
     int width;
 }
