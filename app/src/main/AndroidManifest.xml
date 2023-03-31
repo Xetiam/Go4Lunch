@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -20,7 +21,7 @@
             android:value="${MAPS_API_KEY}" />
 
         <activity android:name=".ui.RestaurantActivity" />
-        <activity android:name=".ui.restaurantdetail.RestaurantDetailActivity" />
+        <activity android:name=".ui.restaurantdetail.RestaurantDetailActivity"/>
         <activity android:name=".ui.coworker.CoworkerFragment" />
         <activity android:name=".ui.restaurantlist.RestaurantListFragment" />
         <activity android:name=".ui.restaurantmap.RestaurantMapFragment" />

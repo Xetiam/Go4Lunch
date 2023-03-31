@@ -11,4 +11,7 @@
     <string name="map_view_navigation_bar">Map View</string>
     <string name="list_view_navigation_bar">List View</string>
     <string name="workmates_navigation_bar">Workmates</string>
+    <string name="website_button">WEBSITE</string>
+    <string name="like_button">LIKE</string>
+    <string name="call_button">CALL</string>
 </resources>

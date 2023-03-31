@@ -60,11 +60,12 @@ public class PlacesNearbySearchResponse {
                         restaurantDescritption,
                         restaurantOpeningHour,
                         restaurantGeoPoint,
-                        3L,
-                        restaurantPhoto));
+                        0L,
+                        restaurantPhoto,
+                        new ArrayList<>()
+                ));
             }
         }
-
         return formattedPlaces;
     }
 }

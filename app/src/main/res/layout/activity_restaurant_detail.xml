@@ -1,9 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:id="@+id/restaurant_name"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/restaurant_detail_picture"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/sharp_image_24" />
+
+    <LinearLayout
+        android:id="@+id/restaurant_info_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/orange_for_lunch"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_extra_medium"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_detail_picture">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/restaurant_detail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="Nome de restaurant long visuellement" />
+
+            <LinearLayout
+                android:id="@+id/star_notation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/restaurant_detail_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            tools:text="Description longue pour remplir le champ et retourner à la ligne" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/lunch_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:src="@drawable/baseline_restaurant_24"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/restaurant_info_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_detail_picture" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/buttons_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/restaurant_info_field">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            android:paddingVertical="@dimen/margin_medium">
+
+            <LinearLayout
+                android:id="@+id/phone_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/phone_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/baseline_phone_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/call_button"
+                    android:textColor="@color/orange_for_lunch" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/star_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/star_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/baseline_star_outline_24_orange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/like_button"
+                    android:textColor="@color/orange_for_lunch" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/website_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_large"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/website_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_horizontal"
+                    android:src="@drawable/baseline_public_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/website_button"
+                    android:textColor="@color/orange_for_lunch" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/buttons_field" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,14 +2,15 @@ package com.example.go4lunch.data;
 
 import android.content.Context;
 
+import com.example.go4lunch.model.UserEntity;
+import com.example.go4lunch.utils.EvaluationCallback;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public interface UserRepositoryContract {
     //TODO : task -> utilisation des callback
     //TODO : FirebaseUser -> User perso
-    FirebaseUser getCurrentUser();
+    UserEntity getCurrentUser();
     String getCurrentUserUID();
     void createUser();
     Task<Void> signOut(Context context);
@@ -18,4 +19,6 @@ public interface UserRepositoryContract {
     Task<Void> updateUsername(String username);
     void updateLunchChoice(String lunchCoice);
     void deleteUserFromFirestore();
+    void addOrRemoveRestaurantEvaluation(String restaurantID, boolean contains);
+    void getCurrentUserEvaluations(EvaluationCallback callback);
 }

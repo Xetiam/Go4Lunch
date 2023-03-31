@@ -1,7 +1,7 @@
 package com.example.go4lunch.data;
 
+import com.example.go4lunch.data.pojo.PlacesDetailsResponse;
 import com.example.go4lunch.data.pojo.PlacesNearbySearchResponse;
-import com.google.android.gms.maps.model.LatLng;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,4 +14,8 @@ public interface PlacesApi {
                                                            @Query("sensor") Boolean sensor,
                                                            @Query("type") String typeSearch,
                                                            @Query("key") String apiKey);
+    @GET("details/json?")
+    Call<PlacesDetailsResponse> getPlaceDetail(@Query("place_id")String placeId,
+                                               @Query("fields") String fields,
+                                               @Query("key") String apiKey);
 }

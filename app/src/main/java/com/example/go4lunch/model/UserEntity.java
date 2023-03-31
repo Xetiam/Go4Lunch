@@ -1,21 +1,29 @@
 package com.example.go4lunch.model;
 
+import android.net.Uri;
+
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class UserEntity {
     private String uid;
     private String username;
     @Nullable
-    private String urlPicture;
+    private Uri urlPicture;
     private String lunchChoice;
+    private ArrayList<String> evaluations;
 
     public UserEntity(String uid,
                       String username,
-                      @Nullable String urlPicture) {
+                      @Nullable Uri urlPicture,
+                      String lunchChoice,
+                      ArrayList<String> evaluations) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.lunchChoice = "";
+        this.lunchChoice = lunchChoice;
+        this.evaluations = evaluations;
     }
 
     public String getUid() {
@@ -35,11 +43,11 @@ public class UserEntity {
     }
 
     @Nullable
-    public String getUrlPicture() {
+    public Uri getUrlPicture() {
         return urlPicture;
     }
 
-    public void setUrlPicture(@Nullable String urlPicture) {
+    public void setUrlPicture(@Nullable Uri urlPicture) {
         this.urlPicture = urlPicture;
     }
 
@@ -49,5 +57,12 @@ public class UserEntity {
 
     public void setLunchChoice(String lunchChoice) {
         this.lunchChoice = lunchChoice;
+    }
+    public ArrayList<String> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(ArrayList<String> evaluations) {
+        this.evaluations = evaluations;
     }
 }

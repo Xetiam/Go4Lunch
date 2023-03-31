@@ -47,7 +47,7 @@ public class RestaurantMapFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        com.example.go4lunch.databinding.FragmentRestaurantMapBinding binding = FragmentRestaurantMapBinding.inflate(inflater);
+        FragmentRestaurantMapBinding binding = FragmentRestaurantMapBinding.inflate(inflater);
         SupportMapFragment supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map_view);
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantMapViewModel.class);

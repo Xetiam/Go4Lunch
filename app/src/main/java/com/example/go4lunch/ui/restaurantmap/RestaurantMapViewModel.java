@@ -40,8 +40,11 @@ public class RestaurantMapViewModel extends ViewModel {
     }
 
     private WithResponseState mapDataToViewState(List<RestaurantEntity> restaurants) {
-        ArrayList<RestaurantEntity> fetchedRestaurants = (ArrayList<RestaurantEntity>) restaurants;
-        restaurantRepository.createRestaurant(fetchedRestaurants);
+        ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
+        if (restaurants != null) {
+            fetchedRestaurants = (ArrayList<RestaurantEntity>) restaurants;
+        }
+        restaurantRepository.createRestaurants(fetchedRestaurants);
         return new WithResponseState(restaurants);
     }
 }
