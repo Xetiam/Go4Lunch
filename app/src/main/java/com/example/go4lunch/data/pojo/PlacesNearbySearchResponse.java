@@ -44,7 +44,7 @@ public class PlacesNearbySearchResponse {
                     restaurantOpeningHour = "Fermé";
                 }
                 if (place.vicinity != null) {
-                    restaurantDescritption = "Type - " + place.vicinity.substring(0, place.vicinity.indexOf(",") - 1);
+                    restaurantDescritption = place.vicinity;//TODO: peut être formater le text
                 }
                 if (place.name != null) {
                     restaurantName = place.name;

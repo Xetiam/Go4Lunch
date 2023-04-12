@@ -73,7 +73,6 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         if (evaluation != null) {
             int starNumber = (int) (evaluation / 3);
             for (int i = 0; i < starNumber; i++) {
-                //TODO: règle métier pour la notation
                 ImageView imageView = new ImageView(context);
                 imageView.setImageDrawable(context.getDrawable(R.drawable.baseline_star_outline_24));
                 holder.binding.starNotation.addView(imageView);

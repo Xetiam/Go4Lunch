@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 goToRestaurantActivity();
             } else {
                 List<AuthUI.IdpConfig> ggAuthProvider =
-                        Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());
+                        Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());//TODO: configurable
                 setListener(ggAuthProvider, binding.googleSigninButton);
                 List<AuthUI.IdpConfig> mailAuthProvider =
                         Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());

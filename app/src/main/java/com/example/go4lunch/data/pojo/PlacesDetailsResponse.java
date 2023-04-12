@@ -30,7 +30,7 @@ public class PlacesDetailsResponse {
             if (place.formattedPhoneNumber != null) {
                 formattedPhoneNumber = place.formattedPhoneNumber;
             }
-            if (place.openingHours.weekdayText != null) {
+            if (place.openingHours != null && place.openingHours.weekdayText != null) {
                 weekText = place.openingHours.weekdayText;
             }
             if(place.placeId != null) {

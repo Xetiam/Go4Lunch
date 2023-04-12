@@ -5,7 +5,6 @@ import static com.example.go4lunch.BuildConfig.MAPS_API_KEY;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModelFactory;
+import com.example.go4lunch.adapter.RestaurantDetailUserRecyclerViewAdapter;
 import com.example.go4lunch.databinding.ActivityRestaurantDetailBinding;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.IntentHelper;
@@ -56,9 +56,27 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             } else {
                 binding.starButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_outline_24_orange));
             }
+            viewModel.initLunchers();
+        }
+        if(restaurantDetailState instanceof CurrentUserLunchState) {
+            CurrentUserLunchState state = (CurrentUserLunchState) restaurantDetailState;
+            if(state.isCurrentUserLuncher()){
+                binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_check_24));
+            } else {
+                binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_restaurant_24));
+            }
+        }
+        if(restaurantDetailState instanceof LuncherState) {
+            LuncherState state = (LuncherState) restaurantDetailState;
+            RestaurantDetailUserRecyclerViewAdapter adapter = new RestaurantDetailUserRecyclerViewAdapter(
+                    state.getUserEntities(),
+                    this);
+            binding.lunchersRecycler.setAdapter(adapter);
+
         }
         if(restaurantDetailState instanceof WithResponseState) {
             WithResponseState state = (WithResponseState) restaurantDetailState;
+            viewModel.initEvaluation();
             requestPermissions(new String[]{CALL_PHONE}, 1);
             String picUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=" + restaurant.getDrawableUrl() + "&key=" + MAPS_API_KEY;
             Glide.with(this)
@@ -77,9 +95,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     }
                 }
             }
-            binding.lunchButton.setOnClickListener(view -> {
-                //TODO: gérer le choix de restau utilisateur -> firestore
-            });
+            binding.lunchButton.setOnClickListener(view -> viewModel.selectOrCancelLunch());
             binding.phoneButton.setOnClickListener(view -> {
                 String number = ("tel:" + state.getRestaurantDetailEntity().getFormattedPhoneNumber());
                 Intent mIntent = new Intent(Intent.ACTION_CALL);
@@ -92,17 +108,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     toast.setDuration(Toast.LENGTH_LONG);
                     toast.show();
                     ClipboardManager clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("test",state.getRestaurantDetailEntity().getFormattedPhoneNumber());
+                    ClipData clip = ClipData.newPlainText("phone number",state.getRestaurantDetailEntity().getFormattedPhoneNumber());
                     clipboard.setPrimaryClip(clip);
                 }
             });
-            binding.websiteButton.setOnClickListener(view -> {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(state.getRestaurantDetailEntity().getWebsiteUrl())));
-            });
-            binding.starButton.setOnClickListener(view -> {
-                //TODO: gérer l'ajout d'évaluation -> firestore
-                viewModel.addOrRemoveEvaluation(state.getRestaurantDetailEntity().getRestaurantId());
-            });
+            binding.websiteButton.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(state.getRestaurantDetailEntity().getWebsiteUrl()))));
+            binding.starButton.setOnClickListener(view -> viewModel.addOrRemoveEvaluation());
         }
     }
 }

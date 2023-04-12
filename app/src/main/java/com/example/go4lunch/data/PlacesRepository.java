@@ -61,7 +61,8 @@ public class PlacesRepository {
 
     public MutableLiveData<RestaurantDetailEntity> getPlaceDetailLiveData(String placeId) {
         MutableLiveData<RestaurantDetailEntity> placeDetailMutableLiveData = new MutableLiveData<>();
-        placesApi.getPlaceDetail(placeId, FIELD_DETAIL,
+        placesApi.getPlaceDetail(placeId,
+                FIELD_DETAIL,
                 MAPS_API_KEY).enqueue(new Callback<PlacesDetailsResponse>() {
             @Override
             public void onResponse(@NonNull Call<PlacesDetailsResponse> call, @NonNull Response<PlacesDetailsResponse> response) {

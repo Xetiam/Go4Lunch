@@ -46,7 +46,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new RestaurantListViewModel(restaurantRepository);
         }
         if (modelClass.isAssignableFrom(CoworkerViewModel.class)) {
-            return (T) new CoworkerViewModel();
+            return (T) new CoworkerViewModel(userRepository);
         }
         if (modelClass.isAssignableFrom(RestaurantDetailViewModel.class)) {
             return (T) new RestaurantDetailViewModel(placesRepository);

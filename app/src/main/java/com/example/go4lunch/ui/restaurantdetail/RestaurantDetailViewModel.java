@@ -11,16 +11,19 @@ import com.example.go4lunch.data.RestaurantRepositoryContract;
 import com.example.go4lunch.data.UserRepository;
 import com.example.go4lunch.data.UserRepositoryContract;
 import com.example.go4lunch.model.RestaurantDetailEntity;
-import com.example.go4lunch.ui.restaurantdetail.WithResponseState;
+import com.example.go4lunch.model.UserEntity;
+import com.example.go4lunch.utils.DetailCallback;
 
 import java.util.ArrayList;
 
-public class RestaurantDetailViewModel extends ViewModel {
+public class RestaurantDetailViewModel extends ViewModel implements DetailCallback {
     private final PlacesRepository placesRepository;
     private final RestaurantRepositoryContract restaurantRepository;
     private final UserRepositoryContract userRepository;
-    public MutableLiveData<RestaurantDetailState> _state = new MutableLiveData<>();
+    private final MutableLiveData<RestaurantDetailState> _state = new MutableLiveData<>();
     public LiveData<RestaurantDetailState> state = _state;
+    private String restaurantId;
+    private boolean isEvaluate;
 
     public RestaurantDetailViewModel(PlacesRepository placesRepository) {
         this.placesRepository = placesRepository;
@@ -29,17 +32,19 @@ public class RestaurantDetailViewModel extends ViewModel {
     }
 
     public void initDetail(String restaurantId) {
-        userRepository.getCurrentUserEvaluations((ArrayList<String> evaluations) -> {
-            if (evaluations.contains(restaurantId)) {
-                this._state.postValue(new HasEvaluate(true));
-            } else {
-                this._state.postValue(new HasEvaluate(false));
-            }
-        });
+        this.restaurantId = restaurantId;
         LiveData<WithResponseState> responseLiveData = Transformations.map(placesRepository.getPlaceDetailLiveData(restaurantId),
                 this::mapDataToViewState
         );
         responseLiveData.observeForever(this::setStateOnResponse);
+    }
+
+    public void initEvaluation() {
+        userRepository.getCurrentUserEvaluations(this, restaurantId);
+    }
+
+    public void initLunchers() {
+        restaurantRepository.getLunchers(restaurantId, userRepository.getCurrentUserUID(), this);
     }
 
     private WithResponseState mapDataToViewState(RestaurantDetailEntity restaurantDetailEntity) {
@@ -47,14 +52,41 @@ public class RestaurantDetailViewModel extends ViewModel {
     }
 
     private void setStateOnResponse(WithResponseState withResponseState) {
-        _state.setValue(withResponseState);
+        _state.postValue(withResponseState);
     }
 
-    public void addOrRemoveEvaluation(String restaurantId) {
-        userRepository.getCurrentUserEvaluations((ArrayList<String> evaluations) -> {
-            restaurantRepository.addOrRemoveAnEvaluation(restaurantId,evaluations.contains(restaurantId));
-            userRepository.addOrRemoveRestaurantEvaluation(restaurantId, evaluations.contains(restaurantId));
-            this._state.postValue(new HasEvaluate(!evaluations.contains(restaurantId)));
-        });
+    public void addOrRemoveEvaluation() {
+        restaurantRepository.addOrRemoveAnEvaluationOnRestaurantAndUser(
+                restaurantId,
+                userRepository.getCurrentUserUID(),
+                isEvaluate,
+                this);
+    }
+
+    public void selectOrCancelLunch() {
+        userRepository.updateLunchChoiceOnUserAndPreviousRestaurant(restaurantId, this);
+    }
+
+    @Override
+    public void lunchersCallback(ArrayList<String> lunchers) {
+        if (lunchers.size() > 0) {
+            userRepository.getUsersLuncherByIds(lunchers, this);
+        }
+    }
+
+    @Override
+    public void userCallback(ArrayList<UserEntity> users) {
+        _state.postValue(new LuncherState(users));
+    }
+
+    @Override
+    public void evaluationsCallback(boolean isEvaluate) {
+        this.isEvaluate = isEvaluate;
+        this._state.postValue(new HasEvaluate(isEvaluate));
+    }
+
+    @Override
+    public void isLuncherCallback(boolean isLuncher) {
+        _state.postValue(new CurrentUserLunchState(isLuncher));
     }
 }

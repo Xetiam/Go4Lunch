@@ -2,11 +2,14 @@ package com.example.go4lunch.data;
 
 
 import com.example.go4lunch.model.RestaurantEntity;
+import com.example.go4lunch.utils.DetailCallback;
 import com.example.go4lunch.utils.RestaurantCallback;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,10 +26,12 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     private static final String RESTAURANT_OPENING_HOURS_FIELD = "restaurantopeninghours";
     private static final String RESTAURANT_PICTURE_URL = "restaurantpictureurl";
     private static final String RESTAURANT_ID = "restaurantid";
-    private static volatile RestaurantRepository instance;
+
+    private static final String USER_COLLECTION_NAME = "users";
+    private static final String USER_EVALUATION_FIELD = "evaluations";
+    private final CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
 
     public void getRestaurants(RestaurantCallback callback) {
-        CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
         reference.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
             List<RestaurantEntity> entities = new ArrayList<>();
@@ -38,10 +43,9 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
                 }
             }
             callback.restaurantsCallback(entities);
-        }).addOnFailureListener(exception -> {
-            //TODO:cas d'erreur
         });
     }
+
     @Override
     public void createRestaurants(ArrayList<RestaurantEntity> restaurantEntities) {
         if (restaurantEntities != null) {
@@ -52,49 +56,77 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     }
 
     @Override
-    public void addOrSuppressALuncher(String restaurantId, String userId) {
-        Map<String, Object> data = new HashMap<>();
-        CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    public void addOrRemoveAnEvaluationOnRestaurantAndUser(String restaurantId, String userId, Boolean remove, DetailCallback callback) {
+        FirebaseFirestore batchReference = FirebaseFirestore.getInstance();
+        WriteBatch batch = batchReference.batch();
         reference.document(restaurantId).get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> document = documentSnapshot.getData();
             if (document != null) {
-                ArrayList<String> lunchers = new ArrayList<>();
-                if (document.get(RESTAURANT_LUNCHERS_FIELD) != null) {
-                    lunchers = (ArrayList<String>) document.get(RESTAURANT_LUNCHERS_FIELD);
-                    if (lunchers != null && !lunchers.contains(userId)) {
-                        lunchers.add(userId);
-                        data.put(RESTAURANT_LUNCHERS_FIELD, lunchers);
-                        reference.document(restaurantId).update(data);
+                Long currentEval;
+                if (document.get(RESTAURANT_EVALUATIONS_FIELD) != null) {
+                    currentEval = (Long) document.get(RESTAURANT_EVALUATIONS_FIELD);
+                    if (remove) {
+                        document.put(RESTAURANT_EVALUATIONS_FIELD, currentEval - 1L);
                     } else {
-                        lunchers.remove(userId);
+                        document.put(RESTAURANT_EVALUATIONS_FIELD, currentEval + 1L);
                     }
+                    DocumentReference restaurantRef = batchReference.collection(COLLECTION_NAME).document(restaurantId);
+                    batch.update(restaurantRef, document);
                 } else {
-                    lunchers.add(userId);
+                    document.put(RESTAURANT_EVALUATIONS_FIELD, 1L);
+                    DocumentReference restaurantRef = batchReference.collection(COLLECTION_NAME).document(restaurantId);
+                    batch.set(restaurantRef, document);
                 }
-                data.put(RESTAURANT_LUNCHERS_FIELD, lunchers);
-                reference.document(restaurantId).update(data);
+                addOrRemoveAnEvaluationOnUser(restaurantId,userId,callback,batch);
+
             }
         });
     }
 
+    private void addOrRemoveAnEvaluationOnUser(String restaurantId, String userId, DetailCallback callback, WriteBatch batch) {
+        FirebaseFirestore batchReference = FirebaseFirestore.getInstance();
+        batchReference.collection(USER_COLLECTION_NAME).document(userId).get().addOnSuccessListener(userDocumentSnapshot -> {
+            DocumentReference userRef = batchReference.collection(USER_COLLECTION_NAME).document(userId);
+            Map<String, Object> userDocument = userDocumentSnapshot.getData();
+            ArrayList<String> evaluations = new ArrayList<>();
+            boolean hasEvaluate = false;
+            if (userDocument != null) {
+                if (userDocument.get(USER_EVALUATION_FIELD) != null) {
+                    evaluations = (ArrayList<String>) userDocument.get(USER_EVALUATION_FIELD);
+                    if (evaluations.contains(restaurantId)) {
+                        evaluations.remove(restaurantId);
+                    } else {
+                        evaluations.add(restaurantId);
+                        hasEvaluate = true;
+                    }
+                    userDocument.put(USER_EVALUATION_FIELD, evaluations);
+                    batch.update(userRef, userDocument);
+                } else {
+                    evaluations.add(restaurantId);
+                    userDocument.put(USER_EVALUATION_FIELD, evaluations);
+                    batch.set(userRef, userDocument);
+                }
+                userDocument.put(USER_EVALUATION_FIELD, evaluations);
+                batch.update(userRef, userDocument);
+            }
+            boolean finalHasEvaluate = hasEvaluate;
+            batch.commit().addOnCompleteListener(task -> callback.evaluationsCallback(finalHasEvaluate));
+        });
+    }
+
     @Override
-    public void addOrRemoveAnEvaluation(String restaurantId, Boolean remove) {
-        Map<String, Object> data = new HashMap<>();
-        CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    public void getLunchers(String restaurantId,String userId, DetailCallback callback) {
         reference.document(restaurantId).get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> document = documentSnapshot.getData();
-            if (document != null) {
-                Long currentEval = 0L;
-                if (document.get(RESTAURANT_EVALUATIONS_FIELD) != null) {
-                    currentEval = (Long) document.get(RESTAURANT_EVALUATIONS_FIELD);
+            if (document != null && document.get(RESTAURANT_LUNCHERS_FIELD) != null) {
+                ArrayList<String> lunchers = (ArrayList<String>) document.get(RESTAURANT_LUNCHERS_FIELD);
+                if(lunchers.contains(userId)){
+                    lunchers.remove(userId);
+                    callback.isLuncherCallback(true);
                 }
-                if (remove) {
-                    data.put(RESTAURANT_EVALUATIONS_FIELD, currentEval - 1L);
-                } else {
-                    data.put(RESTAURANT_EVALUATIONS_FIELD, currentEval + 1L);
-
-                }
-                reference.document(restaurantId).update(data);
+                callback.lunchersCallback(lunchers);
+            } else {
+                callback.lunchersCallback(new ArrayList<>());
             }
         });
     }
@@ -110,13 +142,12 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
         CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
         reference.document(restaurant.getRestaurantid()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             Map<String, Object> document = queryDocumentSnapshots.getData();
-            if(document != null){
+            if (document != null) {
                 reference.document(restaurant.getRestaurantid()).update(data);
             } else {
                 reference.document(restaurant.getRestaurantid()).set(data);
             }
         });
-
     }
 
     private RestaurantEntity getRestaurant(Map<String, Object> document) {

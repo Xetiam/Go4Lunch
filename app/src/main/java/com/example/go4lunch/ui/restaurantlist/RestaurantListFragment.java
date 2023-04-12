@@ -60,7 +60,10 @@ public class RestaurantListFragment extends Fragment {
     private void render(RestaurantListViewState restaurantListViewState) {
         if (restaurantListViewState instanceof WithResponseState) {
             WithResponseState state = (WithResponseState) restaurantListViewState;
-            RestaurantRecyclerViewAdapter adapter = new RestaurantRecyclerViewAdapter(state.getRestaurants(), userPosition, requireActivity());
+            RestaurantRecyclerViewAdapter adapter = new RestaurantRecyclerViewAdapter(
+                    state.getRestaurants(),
+                    userPosition,
+                    requireActivity());
             binding.restaurantRecycler.setAdapter(adapter);
         }
     }

@@ -14,44 +14,11 @@
         app:layout_constraintBottom_toTopOf="@+id/navBar"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@id/navBar"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/mapButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1"
-                android:text="@string/map_view_navigation_bar"
-                style="?android:attr/buttonBarButtonStyle" />
-
-            <Button
-                android:id="@+id/listButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1"
-                android:text="@string/list_view_navigation_bar"
-                style="?android:attr/buttonBarButtonStyle" />
-
-            <Button
-                android:id="@+id/coworkerButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1"
-                android:text="@string/workmates_navigation_bar"
-                style="?android:attr/buttonBarButtonStyle" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        android:padding="@dimen/margin_medium"
+        app:menu="@menu/bottom_navigation_view"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
