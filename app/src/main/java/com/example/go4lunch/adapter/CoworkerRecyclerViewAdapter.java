@@ -1,6 +1,7 @@
 package com.example.go4lunch.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -45,6 +46,8 @@ public class CoworkerRecyclerViewAdapter extends RecyclerView.Adapter<CoworkerRe
         String userDescriptionString = userEntity.getUsername() + "hasn't decided yet";
         if (!Objects.equals(userEntity.getLunchChoice(), null) || !Objects.equals(userEntity.getLunchChoice(), "")) {
             userDescriptionString = userEntity.getUsername() + " is eating (" + getRestaurantById(restaurantEntities, userEntity.getLunchChoice()) + ")";
+        } else {
+            holder.binding.userDescription.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
         }
         holder.binding.userDescription.setText(userDescriptionString);
     }

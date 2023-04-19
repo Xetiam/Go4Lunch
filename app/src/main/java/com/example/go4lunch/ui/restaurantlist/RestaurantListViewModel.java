@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.RestaurantRepository;
 import com.example.go4lunch.data.RestaurantRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.RestaurantCallback;
@@ -14,11 +13,13 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RestaurantListViewModel extends ViewModel implements RestaurantCallback {
     private final RestaurantRepositoryContract restaurantRepository;
     private final MutableLiveData<RestaurantListViewState> _state = new MutableLiveData<>();
     final LiveData<RestaurantListViewState> state = _state;
+    private List<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
     private LatLng userPosition;
 
     public RestaurantListViewModel(RestaurantRepositoryContract restaurantRepository) {
@@ -28,6 +29,20 @@ public class RestaurantListViewModel extends ViewModel implements RestaurantCall
     public void initRestaurantList(LatLng userPosition) {
         this.userPosition = userPosition;
         restaurantRepository.getRestaurants(this);
+    }
+
+    public void search(String s) {
+        List<RestaurantEntity> restaurantsFiltered = new ArrayList<>();
+        for (RestaurantEntity restaurant : fetchedRestaurants) {
+            if(!Objects.equals(s, "")) {
+                if (restaurant.getRestaurantname().toLowerCase().contains(s.toLowerCase())) {
+                    restaurantsFiltered.add(restaurant);
+                }
+            } else {
+                restaurantsFiltered = fetchedRestaurants;
+            }
+        }
+        _state.setValue(new WithResponseState(restaurantsFiltered));
     }
 
     @Override
@@ -82,6 +97,7 @@ public class RestaurantListViewModel extends ViewModel implements RestaurantCall
                 }
             }
         }
+        fetchedRestaurants = filteredRestaurants;
         _state.setValue(new WithResponseState(filteredRestaurants));
     }
 }

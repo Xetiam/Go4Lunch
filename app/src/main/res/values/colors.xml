@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="google_red">#FFd62222</color>
     <color name="mail_gray">#919191</color>
-    <color name="orange_for_lunch">#D54919</color>
-    <color name="orange_for_lunch_variant">#A80000</color>
+    <color name="orange_for_lunch">#fc3f1b</color>
+    <color name="orange_for_lunch_light">#fc7540</color>
+    <color name="orange_for_lunch_variant">#b50504</color>
 </resources>

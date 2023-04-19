@@ -14,12 +14,14 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RestaurantMapViewModel extends ViewModel {
 
     private final PlacesRepository placesRepository;
     private final RestaurantRepositoryContract restaurantRepository;
     private final MutableLiveData<RestaurantMapViewState> _state = new MutableLiveData<>();
+    private ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
     LiveData<RestaurantMapViewState> state = _state;
 
     public RestaurantMapViewModel(PlacesRepository placesRepository) {
@@ -40,11 +42,22 @@ public class RestaurantMapViewModel extends ViewModel {
     }
 
     private WithResponseState mapDataToViewState(List<RestaurantEntity> restaurants) {
-        ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
         if (restaurants != null) {
             fetchedRestaurants = (ArrayList<RestaurantEntity>) restaurants;
         }
         restaurantRepository.createRestaurants(fetchedRestaurants);
         return new WithResponseState(restaurants);
+    }
+
+    public void search(String s) {
+        ArrayList<RestaurantEntity> restaurantsFiltered = new ArrayList<>();
+        if(!Objects.equals(s, "")){
+            for (RestaurantEntity restaurant : fetchedRestaurants) {
+                if (restaurant.getRestaurantname().toLowerCase().contains(s.toLowerCase())) {
+                    restaurantsFiltered.add(restaurant);
+                }
+            }
+            setStateOnResponse(new WithResponseState(restaurantsFiltered));
+        }
     }
 }

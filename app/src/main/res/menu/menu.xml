@@ -5,6 +5,7 @@
         android:id="@+id/menu_search"
         android:icon="@drawable/baseline_search_24"
         android:orderInCategory="100"
-        android:title="TODO"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/search_menu"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
 </menu>
