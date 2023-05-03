@@ -6,16 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class PlacesDetailsResponse {
-    @SerializedName("html_attributions")
-    ArrayList<String> attributions;
     @SerializedName("result")
     PlaceResponse result;
-    @SerializedName("status")
-    String status;
-    @SerializedName("error_message")
-    String error;
-    @SerializedName("info_messages")
-    ArrayList<String> infos;
 
     public RestaurantDetailEntity toDomain() {
         String websiteUrl = "";
