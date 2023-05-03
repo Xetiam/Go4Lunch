@@ -8,21 +8,21 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.go4lunch.data.RestaurantRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
-import com.example.go4lunch.utils.RestaurantCallback;
+import com.example.go4lunch.utils.RestaurantsCallback;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantListViewModel extends ViewModel implements RestaurantCallback {
+public class RestaurantsListViewModel extends ViewModel implements RestaurantsCallback {
     private final RestaurantRepositoryContract restaurantRepository;
     private final MutableLiveData<RestaurantListViewState> _state = new MutableLiveData<>();
     final LiveData<RestaurantListViewState> state = _state;
     private List<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
     private LatLng userPosition;
 
-    public RestaurantListViewModel(RestaurantRepositoryContract restaurantRepository) {
+    public RestaurantsListViewModel(RestaurantRepositoryContract restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 

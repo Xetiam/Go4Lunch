@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,8 +50,10 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         holder.binding.restaurantDistance.setText(distance);
         holder.binding.restaurantOpeningTime.setText(restaurantEntity.getOpeningHour());
         String reco = "(0)";
+        if(restaurantEntity.getLunchers() != null){
+            reco = "(" + restaurantEntity.getLunchers().size() + ")";
+        }
         if(restaurantEntity.getEvaluation() != null){
-            reco = "(" + restaurantEntity.getEvaluation().toString() + ")";
             setStarsNotation(holder, restaurantEntity.getEvaluation());
         }
         holder.binding.restaurantRecommandation.setText(reco);

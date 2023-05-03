@@ -14,4 +14,18 @@
     <string name="search_hint">Type here to search a restaurant</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
+    <string name="toast_drawer_message">You have to choose a restaurant for lunch !</string>
+    <string name="drawer_lunch">YOUR LUNCH</string>
+    <string name="drawer_settings">SETTINGS</string>
+    <string name="srawer_logout">LOGOUT</string>
+    <string name="user_description_no_decision">hasn\'t decided yet</string>
+    <string name="user_description_with_decision">" is eating ("</string>
+    <string name="restaurant_detail_joining">" is joining !"</string>
+    <string name="settings_enabled_notifications">Enable notifications :</string>
+    <string name="settings_disabled_notifications">Disable notifications :</string>
+    <string name="settings_language">English</string>
+    <string name="settings_suppress_account">Delete account</string>
+    <string name="validate_user_name">Validate</string>
+    <string name="user_name_modifier_hint">Change your user name here</string>
+    <string name="toast_modify_user_name">You have to chose a user name to change it !</string>
 </resources>

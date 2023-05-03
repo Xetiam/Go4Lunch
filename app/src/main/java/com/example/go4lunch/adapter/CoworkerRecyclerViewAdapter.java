@@ -43,16 +43,16 @@ public class CoworkerRecyclerViewAdapter extends RecyclerView.Adapter<CoworkerRe
                 .load(userEntity.getUrlPicture())
                 .placeholder(R.drawable.baseline_person_24)
                 .into(holder.binding.profilePicture);
-        String userDescriptionString = userEntity.getUsername() + "hasn't decided yet";
-        if (!Objects.equals(userEntity.getLunchChoice(), null) || !Objects.equals(userEntity.getLunchChoice(), "")) {
-            userDescriptionString = userEntity.getUsername() + " is eating (" + getRestaurantById(restaurantEntities, userEntity.getLunchChoice()) + ")";
+        String userDescriptionString = userEntity.getUsername() + " " +context.getString(R.string.user_description_no_decision);
+        if (!Objects.equals(userEntity.getLunchChoice(), null) && !Objects.equals(userEntity.getLunchChoice(), "")) {
+            userDescriptionString = userEntity.getUsername() + context.getString(R.string.user_description_with_decision) + getRestaurantById(userEntity.getLunchChoice()) + ")";
         } else {
             holder.binding.userDescription.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
         }
         holder.binding.userDescription.setText(userDescriptionString);
     }
 
-    private String getRestaurantById(List<RestaurantEntity> restaurantEntities, String lunchChoice) {
+    private String getRestaurantById(String lunchChoice) {
         String restaurantName = "";
         for (RestaurantEntity restaurant : restaurantEntities) {
             if (Objects.equals(restaurant.getRestaurantid(), lunchChoice)) {

@@ -32,7 +32,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class RestaurantListFragment extends Fragment {
     private FragmentRestaurantListBinding binding;
-    private RestaurantListViewModel viewModel;
+    private RestaurantsListViewModel viewModel;
     private LatLng userPosition;
     ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts
@@ -75,7 +75,7 @@ public class RestaurantListFragment extends Fragment {
 
         binding.restaurantRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
         binding.restaurantRecycler.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL));
-        viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantListViewModel.class);
+        viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantsListViewModel.class);
         viewModel.state.observe(requireActivity(), this::render);
 
         if (ActivityCompat.checkSelfPermission(requireActivity(),

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Go4Lunch</string>t
+    <string name="gg_button_text">SE CONNECTER AVEC GOOGLE</string>
+    <string name="mail_button_text">SE CONNECTER AVEC UN EMAIL</string>
+    <string name="success_message">Connecion Réussie</string>
+    <string name="failure_message">Connexion échouée</string>
+    <string name="map_view_navigation_bar">Carte</string>
+    <string name="list_view_navigation_bar">Liste</string>
+    <string name="workmates_navigation_bar">Collaborateurs</string>
+    <string name="website_button">SITE WEB</string>
+    <string name="like_button">LIKE</string>
+    <string name="call_button">APPEL</string>
+    <string name="search_menu">Chercher</string>
+    <string name="search_hint">Entrez un restaurant que vous chercher</string>
+    <string name="nav_open">Ouvert</string>
+    <string name="nav_close">Fermé</string>
+    <string name="toast_drawer_message">Vous devez choisir un restaurant pour midi !</string>
+    <string name="drawer_lunch">VOTRE REPAS</string>
+    <string name="drawer_settings">SETTINGS</string>
+    <string name="srawer_logout">SE DÉCONNECTER</string>
+    <string name="user_description_no_decision">n\'a pas encore décidé(e)</string>
+    <string name="user_description_with_decision">" mange dans ce restaurant ("</string>
+    <string name="restaurant_detail_joining">" mange ici !"</string>
+    <string name="settings_enabled_notifications">Activer les notifications :</string>
+    <string name="settings_disabled_notifications">Désactiver les notifications :</string>
+    <string name="settings_language">Français</string>
+    <string name="settings_suppress_account">Supprimer votre compte</string>
+    <string name="validate_user_name">Valider</string>
+    <string name="user_name_modifier_hint">Modifier votre pseudo ici</string>
+    <string name="toast_modify_user_name">Vous devez renseigner un pseudo pour pouvoir le changer !</string>
+
+</resources>

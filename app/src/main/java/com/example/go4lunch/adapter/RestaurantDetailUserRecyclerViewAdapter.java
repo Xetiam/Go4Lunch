@@ -38,7 +38,7 @@ public class RestaurantDetailUserRecyclerViewAdapter extends RecyclerView.Adapte
                 .load(userEntity.getUrlPicture())
                 .placeholder(R.drawable.baseline_person_24)
                 .into(holder.binding.profilePicture);
-        String userDescriptionString = userEntity.getUsername() + " is joining !";
+        String userDescriptionString = userEntity.getUsername() + context.getString(R.string.restaurant_detail_joining);
         holder.binding.userDescription.setText(userDescriptionString);
     }
 

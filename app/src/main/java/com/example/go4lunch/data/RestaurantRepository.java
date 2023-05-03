@@ -4,6 +4,7 @@ package com.example.go4lunch.data;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.DetailCallback;
 import com.example.go4lunch.utils.RestaurantCallback;
+import com.example.go4lunch.utils.RestaurantsCallback;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +32,7 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     private static final String USER_EVALUATION_FIELD = "evaluations";
     private final CollectionReference reference = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
 
-    public void getRestaurants(RestaurantCallback callback) {
+    public void getRestaurants(RestaurantsCallback callback) {
         reference.get().addOnSuccessListener(queryDocumentSnapshots -> {
             List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
             List<RestaurantEntity> entities = new ArrayList<>();
@@ -128,6 +129,14 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
             } else {
                 callback.lunchersCallback(new ArrayList<>());
             }
+        });
+    }
+
+    @Override
+    public void getRestaurantById(String lunchChoice, RestaurantCallback callback) {
+        reference.document(lunchChoice).get().addOnSuccessListener(documentSnapshot -> {
+            RestaurantEntity restaurant = getRestaurant(documentSnapshot.getData());
+            callback.restaurantCallback(restaurant);
         });
     }
 

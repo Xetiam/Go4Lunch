@@ -1,6 +1,5 @@
 package com.example.go4lunch.data;
 
-import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -8,10 +7,11 @@ import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.model.UserEntity;
 import com.example.go4lunch.utils.CoworkerCallback;
 import com.example.go4lunch.utils.DetailCallback;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.Task;
+import com.example.go4lunch.utils.RestaurantCallback;
+import com.example.go4lunch.utils.SignOutCallback;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class UserRepository implements UserRepositoryContract {
     private static final String COLLECTION_NAME = "users";
@@ -55,34 +54,48 @@ public class UserRepository implements UserRepositoryContract {
         return (user != null) ? user.getUid() : null;
     }
 
+    public String getCurrentUserMail() {
+        return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+    }
+
     public void createUser() {
         UserEntity user = getCurrentUser();
         if (user != null) {
-            Uri urlPicture = (user.getUrlPicture() != null) ? user.getUrlPicture() : null;
-            String username = user.getUsername();//TODO: userName est null lors d'une connexion google
-            String uid = user.getUid();
-            Map<String, Object> data = new HashMap<>();
-            data.put(USER_ID_FIELD, uid);
-            data.put(USER_NAME_FIELD, username);
-            data.put(USER_PICTURE_FIELD, urlPicture);
-            reference.document(uid).set(data);
+            reference.get().addOnSuccessListener(queryDocumentSnapshots -> {
+                List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
+                boolean shouldCreateUser = true;
+                for (DocumentSnapshot documentSnapshot : documents) {
+                    Map<String, Object> document = documentSnapshot.getData();
+                    if (document != null) {
+                        if (Objects.equals(getUserEntity(document).getUid(), getCurrentUserUID())) {
+                            shouldCreateUser = false;
+                        }
+                    }
+                }
+                if (shouldCreateUser) {
+                    Uri urlPicture = (user.getUrlPicture() != null) ? user.getUrlPicture() : null;
+                    String username = user.getUsername();
+                    String uid = user.getUid();
+                    Map<String, Object> data = new HashMap<>();
+                    data.put(USER_ID_FIELD, uid);
+                    data.put(USER_NAME_FIELD, username);
+                    data.put(USER_PICTURE_FIELD, urlPicture);
+                    reference.document(uid).set(data);
+                }
+            });
+
         }
     }
 
-    public Task<Void> signOut(Context context) {
-        return AuthUI.getInstance().signOut(context);
-    }
-
-    public Task<Void> deleteUser(Context context) {
-        return AuthUI.getInstance().delete(context);
-    }
-
-    public Task<Void> updateUsername(String username) {
+    @Override
+    public void updateUsername(String username) {
         String uid = this.getCurrentUserUID();
         if (uid != null) {
-            return reference.document(uid).update(USER_NAME_FIELD, username);
-        } else {
-            return null;
+            reference.document(uid).update(USER_NAME_FIELD, username);
+            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(username)
+                    .build();
+            Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).updateProfile(request);
         }
     }
 
@@ -96,17 +109,17 @@ public class UserRepository implements UserRepositoryContract {
                 Map<String, Object> document = documentSnapshot.getData();
                 String previousLunchoice = "";
                 if (document != null) {
-                    DocumentReference restaurantRef = batchReference.collection(COLLECTION_NAME).document(uid);
+                    DocumentReference userBatchRef = batchReference.collection(COLLECTION_NAME).document(uid);
                     if (document.get(USER_LUNCH_CHOICE_FIELD) != null &&
                             !Objects.equals(document.get(USER_LUNCH_CHOICE_FIELD), "")) {
                         previousLunchoice = (String) document.get(USER_LUNCH_CHOICE_FIELD);
                     }
                     if (Objects.equals(previousLunchoice, restaurantId)) {
                         document.put(USER_LUNCH_CHOICE_FIELD, "");
-                        batch.update(restaurantRef, document);
+                        batch.update(userBatchRef, document);
                     } else {
                         document.put(USER_LUNCH_CHOICE_FIELD, restaurantId);
-                        batch.set(restaurantRef, document);
+                        batch.set(userBatchRef, document);
                     }
                 }
                 updateLunchChoiceOnRestaurant(previousLunchoice, restaurantId, callback, batch);
@@ -159,11 +172,43 @@ public class UserRepository implements UserRepositoryContract {
         });
     }
 
-    public void deleteUserFromFirestore() {
+    @Override
+    public void deleteUserFromFirestore(SignOutCallback callback) {
         String uid = this.getCurrentUserUID();
         if (uid != null) {
-            reference.document(uid).delete();
+            reference.document(uid).get().addOnSuccessListener(documentSnapshot -> {
+                Map<String, Object> document = documentSnapshot.getData();
+                if (document != null) {
+                    if (document.get(USER_LUNCH_CHOICE_FIELD) != null &&
+                            !Objects.equals(document.get(USER_LUNCH_CHOICE_FIELD), "")) {
+                        String lunchChoiceToDelete = (String) document.get(USER_LUNCH_CHOICE_FIELD);
+                        DocumentReference restaurantRef = FirebaseFirestore.getInstance().collection(RESTAURANT_COLLECTION_NAME).document(lunchChoiceToDelete);
+                        restaurantRef.get().addOnSuccessListener(restaurantDocument -> {
+                            ArrayList<String> actualLunchers;
+                            Map<String, Object> restaurantDocumentData = restaurantDocument.getData();
+                            if (restaurantDocumentData.get(RESTAURANT_LUNCHERS_FIELD) != null) {
+                                actualLunchers = (ArrayList<String>) restaurantDocumentData.get(RESTAURANT_LUNCHERS_FIELD);
+                                if (actualLunchers != null && actualLunchers.contains(getCurrentUserUID())) {
+                                    actualLunchers.remove(getCurrentUserUID());
+                                    restaurantRef.update(RESTAURANT_LUNCHERS_FIELD, actualLunchers);
+                                }
+                            }
+                            deleteAndSignOut(uid,callback);
+
+                        });
+                    } else {
+                        deleteAndSignOut(uid,callback);
+                    }
+                }
+            });
         }
+    }
+
+    private void deleteAndSignOut(String uid, SignOutCallback callback) {
+        reference.document(uid).delete();
+        Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).delete();
+        FirebaseAuth.getInstance().signOut();
+        callback.signout();
     }
 
     @Override
@@ -232,6 +277,15 @@ public class UserRepository implements UserRepositoryContract {
         }).addOnFailureListener(throwable -> {
             Log.e("getUsers :", "on failure", throwable);
         });
+    }
+
+    @Override
+    public void getCurrentUserLunch(RestaurantCallback callback) {
+        reference.document(getCurrentUserUID()).get().addOnSuccessListener(documentSnapshot -> {
+            UserEntity user = getUserEntity(documentSnapshot.getData());
+            callback.userCallback(user.getLunchChoice());
+        });
+
     }
 
     private UserEntity getUserEntity(Map<String, Object> document) {
