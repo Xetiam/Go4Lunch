@@ -51,26 +51,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private void render(LoginViewState loginViewState) {
         if (loginViewState instanceof OnSignInSuccess) {
-            showConnexionMessage(getString(R.string.success_message));
-            viewModel.createUser();
-            goToRestaurantActivity();
+            renderSinginSuccess();
         }
         if (loginViewState instanceof OnSignInFailure) {
             showConnexionMessage(getString(R.string.failure_message));
         }
         if(loginViewState instanceof UserAlreadySignIn){
             UserAlreadySignIn state = (UserAlreadySignIn) loginViewState;
-            if(state.isConnected()){
-                goToRestaurantActivity();
-            } else {
-                List<AuthUI.IdpConfig> ggAuthProvider =
-                        Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());//TODO: configurable
-                setListener(ggAuthProvider, binding.googleSigninButton);
-                List<AuthUI.IdpConfig> mailAuthProvider =
-                        Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
-                setListener(mailAuthProvider, binding.mailSigninButton);
-            }
+            renderUserAlreadySignIn(state);
         }
+    }
+
+    private void renderUserAlreadySignIn(UserAlreadySignIn state) {
+        if(state.isConnected()){
+            goToRestaurantActivity();
+        } else {
+            List<AuthUI.IdpConfig> ggAuthProvider =
+                    Collections.singletonList(new AuthUI.IdpConfig.GoogleBuilder().build());//TODO: configurable
+            setListener(ggAuthProvider, binding.googleSigninButton);
+            List<AuthUI.IdpConfig> mailAuthProvider =
+                    Collections.singletonList(new AuthUI.IdpConfig.EmailBuilder().build());
+            setListener(mailAuthProvider, binding.mailSigninButton);
+        }
+    }
+
+    private void renderSinginSuccess() {
+        showConnexionMessage(getString(R.string.success_message));
+        viewModel.createUser();
+        goToRestaurantActivity();
     }
 
     private void showConnexionMessage(String message) {

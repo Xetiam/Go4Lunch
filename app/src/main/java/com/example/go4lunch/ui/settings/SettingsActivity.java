@@ -38,27 +38,27 @@ public class SettingsActivity  extends AppCompatActivity {
 
     private void render(SettingsState settingsState) {
         if(settingsState instanceof NoInputState){
-            Toast toast = new Toast(this);
-            toast.setText(R.string.toast_modify_user_name);
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.show();
+            renderNoInput();
         }
         if(settingsState instanceof HasSignOutAndDelete) {
             goToLoginActivity();
         }
     }
 
+    private void renderNoInput() {Toast toast = new Toast(this);
+        toast.setText(R.string.toast_modify_user_name);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
+
+    }
+
     private void setListeners() {
         SharedPreferences prefs = this.getSharedPreferences(NOTIFICATIONS_PREFERENCES, Context.MODE_PRIVATE);
         binding.notificationSwitch.setChecked(prefs.getBoolean(IS_ACTIVATED, true));
-        binding.notificationSwitch.setOnClickListener(view -> {
-            prefs.edit()
-                    .putBoolean(IS_ACTIVATED, binding.notificationSwitch.isChecked())
-                    .apply();
-        });
-        binding.deleteAccountButton.setOnClickListener(view -> {
-            viewModel.suppressAccount(this);
-        });
+        binding.notificationSwitch.setOnClickListener(view -> prefs.edit()
+                .putBoolean(IS_ACTIVATED, binding.notificationSwitch.isChecked())
+                .apply());
+        binding.deleteAccountButton.setOnClickListener(view -> viewModel.suppressAccount(this));
         binding.validateUserNameButton.setOnClickListener(view -> {
             viewModel.modifyUserName(binding.userNameModifier.getText().toString());
             View keyBoard = this.getCurrentFocus();

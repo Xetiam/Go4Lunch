@@ -51,69 +51,85 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private void render(RestaurantDetailState restaurantDetailState) {
         if(restaurantDetailState instanceof HasEvaluate){
             HasEvaluate state = (HasEvaluate) restaurantDetailState;
-            if(state.isEvaluate()){
-                binding.starButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_24));
-            } else {
-                binding.starButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_outline_24_orange));
-            }
-            viewModel.initLunchers();
+            renderHasEvaluate(state);
         }
         if(restaurantDetailState instanceof CurrentUserLunchState) {
             CurrentUserLunchState state = (CurrentUserLunchState) restaurantDetailState;
-            if(state.isCurrentUserLuncher()){
-                binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_check_24));
-            } else {
-                binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_restaurant_24));
-            }
+            renderCurrentLuncher(state);
         }
         if(restaurantDetailState instanceof LuncherState) {
             LuncherState state = (LuncherState) restaurantDetailState;
-            RestaurantDetailUserRecyclerViewAdapter adapter = new RestaurantDetailUserRecyclerViewAdapter(
-                    state.getUserEntities(),
-                    this);
-            binding.lunchersRecycler.setAdapter(adapter);
+            renderLunchers(state);
 
         }
         if(restaurantDetailState instanceof WithResponseState) {
             WithResponseState state = (WithResponseState) restaurantDetailState;
-            viewModel.initEvaluation();
-            requestPermissions(new String[]{CALL_PHONE}, 1);
-            String picUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=" + restaurant.getDrawableUrl() + "&key=" + MAPS_API_KEY;
-            Glide.with(this)
-                    .load(picUrl)
-                    .placeholder(R.drawable.sharp_image_24)
-                    .into(binding.restaurantDetailPicture);
-            binding.restaurantDetailName.setText(restaurant.getRestaurantname());
-            binding.restaurantDetailDescription.setText(restaurant.getRestaurantdescription());
-            if(restaurant.getEvaluation() != null){
-                int starNumber = (int) (restaurant.getEvaluation()/3);
-                for(int i = 0; i<starNumber; i++) {
-                    if(i<=2) {
-                        ImageView imageView = new ImageView(this);
-                        imageView.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_outline_24));
-                        binding.starNotation.addView(imageView);
-                    }
+            renderWithResponse(state);
+        }
+    }
+
+    private void renderWithResponse(WithResponseState state) {
+        viewModel.initEvaluation();
+        requestPermissions(new String[]{CALL_PHONE}, 1);
+        String picUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=" + restaurant.getDrawableUrl() + "&key=" + MAPS_API_KEY;
+        Glide.with(this)
+                .load(picUrl)
+                .placeholder(R.drawable.sharp_image_24)
+                .into(binding.restaurantDetailPicture);
+        binding.restaurantDetailName.setText(restaurant.getRestaurantname());
+        binding.restaurantDetailDescription.setText(restaurant.getRestaurantdescription());
+        if(restaurant.getEvaluation() != null){
+            int starNumber = (int) (restaurant.getEvaluation()/3);
+            for(int i = 0; i<starNumber; i++) {
+                if(i<=2) {
+                    ImageView imageView = new ImageView(this);
+                    imageView.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_outline_24));
+                    binding.starNotation.addView(imageView);
                 }
             }
-            binding.lunchButton.setOnClickListener(view -> viewModel.selectOrCancelLunch());
-            binding.phoneButton.setOnClickListener(view -> {
-                String number = ("tel:" + state.getRestaurantDetailEntity().getFormattedPhoneNumber());
-                Intent mIntent = new Intent(Intent.ACTION_CALL);
-                mIntent.setData(Uri.parse(number));
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    startActivity(mIntent);
-                } else {
-                    Toast toast = new Toast(this);
-                    toast.setText("Le numéro de téléphone est copié dans le presse-papier");
-                    toast.setDuration(Toast.LENGTH_LONG);
-                    toast.show();
-                    ClipboardManager clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("phone number",state.getRestaurantDetailEntity().getFormattedPhoneNumber());
-                    clipboard.setPrimaryClip(clip);
-                }
-            });
-            binding.websiteButton.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(state.getRestaurantDetailEntity().getWebsiteUrl()))));
-            binding.starButton.setOnClickListener(view -> viewModel.addOrRemoveEvaluation());
         }
+        binding.lunchButton.setOnClickListener(view -> viewModel.selectOrCancelLunch());
+        binding.phoneButton.setOnClickListener(view -> {
+            String number = ("tel:" + state.getRestaurantDetailEntity().getFormattedPhoneNumber());
+            Intent mIntent = new Intent(Intent.ACTION_CALL);
+            mIntent.setData(Uri.parse(number));
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                startActivity(mIntent);
+            } else {
+                Toast toast = new Toast(this);
+                toast.setText("Le numéro de téléphone est copié dans le presse-papier");
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.show();
+                ClipboardManager clipboard = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("phone number",state.getRestaurantDetailEntity().getFormattedPhoneNumber());
+                clipboard.setPrimaryClip(clip);
+            }
+        });
+        binding.websiteButton.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(state.getRestaurantDetailEntity().getWebsiteUrl()))));
+        binding.starButton.setOnClickListener(view -> viewModel.addOrRemoveEvaluation());
+    }
+
+    private void renderLunchers(LuncherState state) {
+        RestaurantDetailUserRecyclerViewAdapter adapter = new RestaurantDetailUserRecyclerViewAdapter(
+                state.getUserEntities(),
+                this);
+        binding.lunchersRecycler.setAdapter(adapter);
+    }
+
+    private void renderCurrentLuncher(CurrentUserLunchState state) {
+        if(state.isCurrentUserLuncher()){
+            binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_check_24));
+        } else {
+            binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_restaurant_24));
+        }
+    }
+
+    private void renderHasEvaluate(HasEvaluate state) {
+        if(state.isEvaluate()){
+            binding.starButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_24));
+        } else {
+            binding.starButton.setImageDrawable(AppCompatResources.getDrawable(this,R.drawable.baseline_star_outline_24_orange));
+        }
+        viewModel.initLunchers();
     }
 }

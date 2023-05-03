@@ -111,28 +111,40 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
     private void render(RestaurantState restaurantState) {
         if(restaurantState instanceof UserDrawerState) {
             UserDrawerState state = (UserDrawerState) restaurantState;
-            View header = binding.drawerView.getHeaderView(0);
-            ImageView profilePicture = header.findViewById(R.id.user_avatar);
-            TextView userName = header.findViewById(R.id.user_name);
-            TextView userMail = header.findViewById(R.id.user_mail);
-            userName.setText(state.getUser().getUsername());
-            Glide.with(this)
-                    .load(state.getUser().getUrlPicture())
-                    .placeholder(R.drawable.baseline_person_24)
-                    .into(profilePicture);
-            userMail.setText(state.getUserMail());
+            renderDrawer(state);
         }
         if(restaurantState instanceof LunchChoiceState) {
             LunchChoiceState state = (LunchChoiceState) restaurantState;
-            IntentHelper helper = new IntentHelper();
-            helper.goToRestaurantDetail(this, state.getLunchChoice());
+            renderLunchChoice(state);
         }
         if(restaurantState instanceof NoLunchChoiceState) {
-            Toast toast = new Toast(this);
-            toast.setText(R.string.toast_drawer_message);
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.show();
+            renderNoLunchChoice();
         }
+    }
+
+    private void renderNoLunchChoice() {
+        Toast toast = new Toast(this);
+        toast.setText(R.string.toast_drawer_message);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    private void renderLunchChoice(LunchChoiceState state) {
+        IntentHelper helper = new IntentHelper();
+        helper.goToRestaurantDetail(this, state.getLunchChoice());
+    }
+
+    private void renderDrawer(UserDrawerState state) {
+        View header = binding.drawerView.getHeaderView(0);
+        ImageView profilePicture = header.findViewById(R.id.user_avatar);
+        TextView userName = header.findViewById(R.id.user_name);
+        TextView userMail = header.findViewById(R.id.user_mail);
+        userName.setText(state.getUser().getUsername());
+        Glide.with(this)
+                .load(state.getUser().getUrlPicture())
+                .placeholder(R.drawable.baseline_person_24)
+                .into(profilePicture);
+        userMail.setText(state.getUserMail());
     }
 
     private void setListeners() {
