@@ -23,9 +23,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.RestaurantActivity" />
-        <activity android:name=".ui.restaurantdetail.RestaurantDetailActivity"/>
+        <activity android:name=".ui.restaurantdetail.RestaurantDetailActivity" />
         <activity android:name=".ui.coworker.CoworkerFragment" />
         <activity android:name=".ui.restaurantlist.RestaurantListFragment" />
         <activity android:name=".ui.restaurantmap.RestaurantMapFragment" />

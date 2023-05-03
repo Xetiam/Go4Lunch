@@ -30,16 +30,8 @@ public class UserEntity {
         return uid;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Nullable
@@ -47,22 +39,8 @@ public class UserEntity {
         return urlPicture;
     }
 
-    public void setUrlPicture(@Nullable Uri urlPicture) {
-        this.urlPicture = urlPicture;
-    }
-
     public String getLunchChoice() {
         return lunchChoice;
     }
 
-    public void setLunchChoice(String lunchChoice) {
-        this.lunchChoice = lunchChoice;
-    }
-    public ArrayList<String> getEvaluations() {
-        return evaluations;
-    }
-
-    public void setEvaluations(ArrayList<String> evaluations) {
-        this.evaluations = evaluations;
-    }
 }

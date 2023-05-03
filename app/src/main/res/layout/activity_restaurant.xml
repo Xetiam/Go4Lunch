@@ -31,15 +31,16 @@
             android:padding="@dimen/margin_medium"
             app:menu="@menu/bottom_navigation_view" />
     </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawerView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:backgroundTint="@color/orange_for_lunch_light"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"
         android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header_main"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:menu="@menu/drawer_view" />
 </androidx.drawerlayout.widget.DrawerLayout>

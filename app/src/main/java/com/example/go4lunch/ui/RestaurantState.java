@@ -35,5 +35,6 @@ class LunchChoiceState extends RestaurantState {
         return lunchChoice;
     }
 }
+
 class NoLunchChoiceState extends RestaurantState {
 }

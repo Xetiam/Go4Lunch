@@ -1,7 +1,5 @@
 package com.example.go4lunch.ui.settings;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -21,7 +19,7 @@ public class SettingsViewModel extends ViewModel implements SignOutCallback {
         this.userRepository = userRepository;
     }
 
-    public void suppressAccount(Context context) {
+    public void suppressAccount() {
         userRepository.deleteUserFromFirestore(this);
     }
 

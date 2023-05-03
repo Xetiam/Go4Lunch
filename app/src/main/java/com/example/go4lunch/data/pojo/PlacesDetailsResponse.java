@@ -25,7 +25,7 @@ public class PlacesDetailsResponse {
             if (place.openingHours != null && place.openingHours.weekdayText != null) {
                 weekText = place.openingHours.weekdayText;
             }
-            if(place.placeId != null) {
+            if (place.placeId != null) {
                 restaurantId = place.placeId;
             }
         }

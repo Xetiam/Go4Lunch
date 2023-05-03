@@ -18,21 +18,18 @@ import com.example.go4lunch.ui.settings.SettingsViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private static final class FactoryHolder {
-        static final ViewModelFactory factory = new ViewModelFactory();
-    }
-
-    public static ViewModelFactory getInstance() {
-        return FactoryHolder.factory;
-    }
-
-    private ViewModelFactory() {
-    }
     private final PlacesRepository placesRepository = new PlacesRepository(
             RetrofitService.getPlacesApi()
     );
     private final UserRepository userRepository = new UserRepository();
     private final RestaurantRepository restaurantRepository = new RestaurantRepository();
+
+    private ViewModelFactory() {
+    }
+
+    public static ViewModelFactory getInstance() {
+        return FactoryHolder.factory;
+    }
 
     @NonNull
     @Override
@@ -60,5 +57,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new SettingsViewModel(userRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
+    }
+
+    private static final class FactoryHolder {
+        static final ViewModelFactory factory = new ViewModelFactory();
     }
 }

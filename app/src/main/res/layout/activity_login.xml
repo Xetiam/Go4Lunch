@@ -6,23 +6,24 @@
 
     <Button
         android:id="@+id/google_signin_button"
-        android:backgroundTint="@color/google_red"
-        android:drawableLeft="@drawable/ico_google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_medium"
+        android:backgroundTint="@color/google_red"
+        android:drawableLeft="@drawable/ico_google"
         android:text="@string/gg_button_text"
         app:layout_constraintBottom_toTopOf="@id/mail_signin_button" />
+
     <Button
         android:id="@+id/mail_signin_button"
-        android:backgroundTint="@color/mail_gray"
-        android:drawableLeft="@drawable/ico_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginBottom="@dimen/margin_extra_large"
+        android:backgroundTint="@color/mail_gray"
+        android:drawableLeft="@drawable/ico_mail"
         android:text="@string/mail_button_text"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

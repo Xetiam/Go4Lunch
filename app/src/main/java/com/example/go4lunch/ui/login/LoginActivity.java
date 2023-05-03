@@ -28,11 +28,11 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     private LoginViewModel viewModel;
-    private ActivityLoginBinding binding;
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             this::onSignInResult
     );
+    private ActivityLoginBinding binding;
 
     private void onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         viewModel.onSignInResult(result);
@@ -56,14 +56,14 @@ public class LoginActivity extends AppCompatActivity {
         if (loginViewState instanceof OnSignInFailure) {
             showConnexionMessage(getString(R.string.failure_message));
         }
-        if(loginViewState instanceof UserAlreadySignIn){
+        if (loginViewState instanceof UserAlreadySignIn) {
             UserAlreadySignIn state = (UserAlreadySignIn) loginViewState;
             renderUserAlreadySignIn(state);
         }
     }
 
     private void renderUserAlreadySignIn(UserAlreadySignIn state) {
-        if(state.isConnected()){
+        if (state.isConnected()) {
             goToRestaurantActivity();
         } else {
             List<AuthUI.IdpConfig> ggAuthProvider =

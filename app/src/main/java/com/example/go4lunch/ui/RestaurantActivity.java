@@ -44,9 +44,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Objects;
 
 public class RestaurantActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private ActivityRestaurantBinding binding;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-    private RestaurantsViewModel viewModel;
     ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts
                             .RequestMultiplePermissions(),
@@ -55,6 +52,9 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
                         ft.replace(R.id.fragment_container, new RestaurantMapFragment());
                         ft.commit();
                     });
+    private ActivityRestaurantBinding binding;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private RestaurantsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,15 +109,15 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
     }
 
     private void render(RestaurantState restaurantState) {
-        if(restaurantState instanceof UserDrawerState) {
+        if (restaurantState instanceof UserDrawerState) {
             UserDrawerState state = (UserDrawerState) restaurantState;
             renderDrawer(state);
         }
-        if(restaurantState instanceof LunchChoiceState) {
+        if (restaurantState instanceof LunchChoiceState) {
             LunchChoiceState state = (LunchChoiceState) restaurantState;
             renderLunchChoice(state);
         }
-        if(restaurantState instanceof NoLunchChoiceState) {
+        if (restaurantState instanceof NoLunchChoiceState) {
             renderNoLunchChoice();
         }
     }
@@ -175,6 +175,7 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
         Intent intent = new Intent(this, LoginActivity.class).addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
         this.startActivity(intent);
     }
+
     private void goToSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         this.startActivity(intent);

@@ -31,14 +31,14 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
 public class RestaurantListFragment extends Fragment {
-    private FragmentRestaurantListBinding binding;
-    private RestaurantsListViewModel viewModel;
-    private LatLng userPosition;
     ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts
                             .RequestMultiplePermissions(),
                     result -> {
                     });
+    private FragmentRestaurantListBinding binding;
+    private RestaurantsListViewModel viewModel;
+    private LatLng userPosition;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

@@ -22,9 +22,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.List;
 
 public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<RestaurantRecyclerViewAdapter.ViewHolder> {
-    public List<RestaurantEntity> restaurants;
     private final LatLng userPosition;
     private final Context context;
+    public List<RestaurantEntity> restaurants;
 
     public RestaurantRecyclerViewAdapter(List<RestaurantEntity> restaurants, LatLng userPosition, Context context) {
         this.restaurants = restaurants;
@@ -50,10 +50,10 @@ public class RestaurantRecyclerViewAdapter extends RecyclerView.Adapter<Restaura
         holder.binding.restaurantDistance.setText(distance);
         holder.binding.restaurantOpeningTime.setText(restaurantEntity.getOpeningHour());
         String reco = "(0)";
-        if(restaurantEntity.getLunchers() != null){
+        if (restaurantEntity.getLunchers() != null) {
             reco = "(" + restaurantEntity.getLunchers().size() + ")";
         }
-        if(restaurantEntity.getEvaluation() != null){
+        if (restaurantEntity.getEvaluation() != null) {
             setStarsNotation(holder, restaurantEntity.getEvaluation());
         }
         holder.binding.restaurantRecommandation.setText(reco);

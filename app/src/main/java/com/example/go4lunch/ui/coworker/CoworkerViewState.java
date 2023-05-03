@@ -5,7 +5,9 @@ import com.example.go4lunch.model.UserEntity;
 
 import java.util.ArrayList;
 
-public class CoworkerViewState {}
+public class CoworkerViewState {
+}
+
 class UserResponseState extends CoworkerViewState {
     private final ArrayList<UserEntity> userEntities;
     private final ArrayList<RestaurantEntity> restaurantEntities;

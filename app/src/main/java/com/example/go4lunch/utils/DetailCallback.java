@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 public interface DetailCallback {
     void lunchersCallback(ArrayList<String> lunchers);
+
     void userCallback(ArrayList<UserEntity> users);
+
     void evaluationsCallback(boolean isEvaluate);
+
     void isLuncherCallback(boolean isLuncher);
 
 }

@@ -6,7 +6,8 @@ import java.util.List;
 
 public class RestaurantMapViewState {
 }
-class WithResponseState extends RestaurantMapViewState{
+
+class WithResponseState extends RestaurantMapViewState {
     private final List<RestaurantEntity> restaurants;
 
     public WithResponseState(List<RestaurantEntity> restaurants) {

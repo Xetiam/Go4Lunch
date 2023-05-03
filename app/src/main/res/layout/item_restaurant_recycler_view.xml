@@ -1,35 +1,39 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:clickable="true"
-    android:focusable="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="fill_horizontal">
+        android:layout_gravity="fill_horizontal"
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/restaurant_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
-                tools:text="Nom du restaurant"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                tools:text="Nom du restaurant" />
+
             <TextView
                 android:id="@+id/restaurant_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
-                tools:text="Type : Adresse du restaurant"/>
+                tools:text="Type : Adresse du restaurant" />
+
             <TextView
                 android:id="@+id/restaurant_opening_time"
                 android:layout_width="match_parent"
@@ -38,45 +42,50 @@
                 android:layout_marginBottom="@dimen/margin_medium"
                 tools:text="12h-14h" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginVertical="@dimen/margin_medium"
             android:layout_gravity="center_vertical"
+            android:layout_marginVertical="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_medium"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/restaurant_distance"
-                tools:text="XXXm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/margin_medium"
                 android:textColor="@color/mail_gray"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                tools:text="XXXm" />
+
             <TextView
                 android:id="@+id/restaurant_recommandation"
-                tools:text="(X)"
-                android:layout_gravity="end"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:gravity="center_vertical"
-                app:drawableStartCompat="@drawable/outline_person_24" />
+                app:drawableStartCompat="@drawable/outline_person_24"
+                tools:text="(X)" />
+
             <LinearLayout
                 android:id="@+id/star_notation"
-                android:layout_gravity="end"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:orientation="horizontal" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/restaurant_picture"
-            android:src="@drawable/sharp_image_24"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/margin_short"
             android:scaleType="centerCrop"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:src="@drawable/sharp_image_24" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class CoworkerRecyclerViewAdapter extends RecyclerView.Adapter<CoworkerRecyclerViewAdapter.ViewHolder> {
-    public List<UserEntity> lunchers;
     private final Context context;
     private final List<RestaurantEntity> restaurantEntities;
+    public List<UserEntity> lunchers;
 
     public CoworkerRecyclerViewAdapter(List<UserEntity> lunchers, List<RestaurantEntity> restaurantEntities, Context context) {
         this.lunchers = lunchers;
@@ -43,7 +43,7 @@ public class CoworkerRecyclerViewAdapter extends RecyclerView.Adapter<CoworkerRe
                 .load(userEntity.getUrlPicture())
                 .placeholder(R.drawable.baseline_person_24)
                 .into(holder.binding.profilePicture);
-        String userDescriptionString = userEntity.getUsername() + " " +context.getString(R.string.user_description_no_decision);
+        String userDescriptionString = userEntity.getUsername() + " " + context.getString(R.string.user_description_no_decision);
         if (!Objects.equals(userEntity.getLunchChoice(), null) && !Objects.equals(userEntity.getLunchChoice(), "")) {
             userDescriptionString = userEntity.getUsername() + context.getString(R.string.user_description_with_decision) + getRestaurantById(userEntity.getLunchChoice()) + ")";
         } else {

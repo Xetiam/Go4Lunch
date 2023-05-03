@@ -78,7 +78,7 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
                     DocumentReference restaurantRef = batchReference.collection(COLLECTION_NAME).document(restaurantId);
                     batch.set(restaurantRef, document);
                 }
-                addOrRemoveAnEvaluationOnUser(restaurantId,userId,callback,batch);
+                addOrRemoveAnEvaluationOnUser(restaurantId, userId, callback, batch);
 
             }
         });
@@ -116,12 +116,12 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
     }
 
     @Override
-    public void getLunchers(String restaurantId,String userId, DetailCallback callback) {
+    public void getLunchers(String restaurantId, String userId, DetailCallback callback) {
         reference.document(restaurantId).get().addOnSuccessListener(documentSnapshot -> {
             Map<String, Object> document = documentSnapshot.getData();
             if (document != null && document.get(RESTAURANT_LUNCHERS_FIELD) != null) {
                 ArrayList<String> lunchers = (ArrayList<String>) document.get(RESTAURANT_LUNCHERS_FIELD);
-                if(lunchers.contains(userId)){
+                if (lunchers.contains(userId)) {
                     lunchers.remove(userId);
                     callback.isLuncherCallback(true);
                 }
@@ -132,7 +132,6 @@ public class RestaurantRepository implements RestaurantRepositoryContract {
         });
     }
 
-    @Override
     public void getRestaurantById(String lunchChoice, RestaurantCallback callback) {
         reference.document(lunchChoice).get().addOnSuccessListener(documentSnapshot -> {
             RestaurantEntity restaurant = getRestaurant(documentSnapshot.getData());

@@ -16,6 +16,7 @@ public class RetrofitService {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
+
     public static PlacesApi getPlacesApi() {
         return retrofit.create(PlacesApi.class);
     }

@@ -11,10 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
@@ -44,6 +44,11 @@ import java.util.Objects;
 
 public class RestaurantMapFragment extends Fragment
         implements OnMapReadyCallback {
+    ActivityResultLauncher<String[]> locationPermissionRequest =
+            registerForActivityResult(new ActivityResultContracts
+                            .RequestMultiplePermissions(),
+                    result -> {
+                    });
     private GoogleMap googleMap;
     private RestaurantMapViewModel viewModel;
     private List<RestaurantEntity> restaurants = new ArrayList<>();
@@ -112,12 +117,6 @@ public class RestaurantMapFragment extends Fragment
             });
         }
     }
-
-    ActivityResultLauncher<String[]> locationPermissionRequest =
-            registerForActivityResult(new ActivityResultContracts
-                            .RequestMultiplePermissions(),
-                    result -> {
-                    });
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {

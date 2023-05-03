@@ -15,8 +15,8 @@ import com.example.go4lunch.model.UserEntity;
 import java.util.List;
 
 public class RestaurantDetailUserRecyclerViewAdapter extends RecyclerView.Adapter<RestaurantDetailUserRecyclerViewAdapter.ViewHolder> {
-    public List<UserEntity> lunchers;
     private final Context context;
+    public List<UserEntity> lunchers;
 
     public RestaurantDetailUserRecyclerViewAdapter(List<UserEntity> lunchers, Context context) {
         this.lunchers = lunchers;

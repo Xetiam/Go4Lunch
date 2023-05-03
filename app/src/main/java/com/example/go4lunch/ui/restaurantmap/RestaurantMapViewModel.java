@@ -21,8 +21,8 @@ public class RestaurantMapViewModel extends ViewModel {
     private final PlacesRepository placesRepository;
     private final RestaurantRepositoryContract restaurantRepository;
     private final MutableLiveData<RestaurantMapViewState> _state = new MutableLiveData<>();
-    private ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
     LiveData<RestaurantMapViewState> state = _state;
+    private ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
 
     public RestaurantMapViewModel(PlacesRepository placesRepository) {
         this.placesRepository = placesRepository;
@@ -51,7 +51,7 @@ public class RestaurantMapViewModel extends ViewModel {
 
     public void search(String s) {
         ArrayList<RestaurantEntity> restaurantsFiltered = new ArrayList<>();
-        if(!Objects.equals(s, "")){
+        if (!Objects.equals(s, "")) {
             for (RestaurantEntity restaurant : fetchedRestaurants) {
                 if (restaurant.getRestaurantname().toLowerCase().contains(s.toLowerCase())) {
                     restaurantsFiltered.add(restaurant);

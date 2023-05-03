@@ -1,7 +1,6 @@
 package com.example.go4lunch.ui.restaurantlist;
 
 import com.example.go4lunch.model.RestaurantEntity;
-import com.example.go4lunch.ui.restaurantmap.RestaurantMapViewState;
 
 import java.util.List;
 

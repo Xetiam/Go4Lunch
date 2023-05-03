@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 public class RestaurantDetailState {
 }
-class WithResponseState extends RestaurantDetailState{
+
+class WithResponseState extends RestaurantDetailState {
     private final RestaurantDetailEntity restaurantDetailEntity;
+
     public WithResponseState(RestaurantDetailEntity restaurantDetailEntity) {
         this.restaurantDetailEntity = restaurantDetailEntity;
     }
@@ -33,18 +35,20 @@ class HasEvaluate extends RestaurantDetailState {
 
 class LuncherState extends RestaurantDetailState {
 
-    public ArrayList<UserEntity> getUserEntities() {
-        return userEntities;
-    }
-
     private final ArrayList<UserEntity> userEntities;
 
     LuncherState(ArrayList<UserEntity> userEntities) {
         this.userEntities = userEntities;
     }
+
+    public ArrayList<UserEntity> getUserEntities() {
+        return userEntities;
+    }
 }
 
 class CurrentUserLunchState extends RestaurantDetailState {
+    private final boolean isCurrentUserLuncher;
+
     CurrentUserLunchState(boolean isCurrentUserLuncher) {
         this.isCurrentUserLuncher = isCurrentUserLuncher;
     }
@@ -52,7 +56,6 @@ class CurrentUserLunchState extends RestaurantDetailState {
     public boolean isCurrentUserLuncher() {
         return isCurrentUserLuncher;
     }
-    private final boolean isCurrentUserLuncher;
 
 
 }

@@ -193,11 +193,11 @@ public class UserRepository implements UserRepositoryContract {
                                     restaurantRef.update(RESTAURANT_LUNCHERS_FIELD, actualLunchers);
                                 }
                             }
-                            deleteAndSignOut(uid,callback);
+                            deleteAndSignOut(uid, callback);
 
                         });
                     } else {
-                        deleteAndSignOut(uid,callback);
+                        deleteAndSignOut(uid, callback);
                     }
                 }
             });
@@ -279,7 +279,6 @@ public class UserRepository implements UserRepositoryContract {
         });
     }
 
-    @Override
     public void getCurrentUserLunch(RestaurantCallback callback) {
         reference.document(getCurrentUserUID()).get().addOnSuccessListener(documentSnapshot -> {
             UserEntity user = getUserEntity(documentSnapshot.getData());

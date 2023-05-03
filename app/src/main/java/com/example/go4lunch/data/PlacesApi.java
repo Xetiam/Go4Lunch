@@ -14,8 +14,9 @@ public interface PlacesApi {
                                                            @Query("sensor") Boolean sensor,
                                                            @Query("type") String typeSearch,
                                                            @Query("key") String apiKey);
+
     @GET("details/json?")
-    Call<PlacesDetailsResponse> getPlaceDetail(@Query("place_id")String placeId,
+    Call<PlacesDetailsResponse> getPlaceDetail(@Query("place_id") String placeId,
                                                @Query("fields") String fields,
                                                @Query("key") String apiKey);
 }

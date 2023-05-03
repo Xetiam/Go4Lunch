@@ -19,11 +19,11 @@ import com.example.go4lunch.ViewModelFactory;
 import com.example.go4lunch.databinding.ActivitySettingsBinding;
 import com.example.go4lunch.ui.login.LoginActivity;
 
-public class SettingsActivity  extends AppCompatActivity {
-    private ActivitySettingsBinding binding;
-    private SettingsViewModel viewModel;
+public class SettingsActivity extends AppCompatActivity {
     private final String NOTIFICATIONS_PREFERENCES = "notification_preferences";
     private final String IS_ACTIVATED = "is_activated";
+    private ActivitySettingsBinding binding;
+    private SettingsViewModel viewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,15 +37,16 @@ public class SettingsActivity  extends AppCompatActivity {
     }
 
     private void render(SettingsState settingsState) {
-        if(settingsState instanceof NoInputState){
+        if (settingsState instanceof NoInputState) {
             renderNoInput();
         }
-        if(settingsState instanceof HasSignOutAndDelete) {
+        if (settingsState instanceof HasSignOutAndDelete) {
             goToLoginActivity();
         }
     }
 
-    private void renderNoInput() {Toast toast = new Toast(this);
+    private void renderNoInput() {
+        Toast toast = new Toast(this);
         toast.setText(R.string.toast_modify_user_name);
         toast.setDuration(Toast.LENGTH_LONG);
         toast.show();
@@ -58,7 +59,7 @@ public class SettingsActivity  extends AppCompatActivity {
         binding.notificationSwitch.setOnClickListener(view -> prefs.edit()
                 .putBoolean(IS_ACTIVATED, binding.notificationSwitch.isChecked())
                 .apply());
-        binding.deleteAccountButton.setOnClickListener(view -> viewModel.suppressAccount(this));
+        binding.deleteAccountButton.setOnClickListener(view -> viewModel.suppressAccount());
         binding.validateUserNameButton.setOnClickListener(view -> {
             viewModel.modifyUserName(binding.userNameModifier.getText().toString());
             View keyBoard = this.getCurrentFocus();

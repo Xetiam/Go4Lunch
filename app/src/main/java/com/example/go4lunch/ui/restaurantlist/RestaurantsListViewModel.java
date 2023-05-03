@@ -34,7 +34,7 @@ public class RestaurantsListViewModel extends ViewModel implements RestaurantsCa
     public void search(String s) {
         List<RestaurantEntity> restaurantsFiltered = new ArrayList<>();
         for (RestaurantEntity restaurant : fetchedRestaurants) {
-            if(!Objects.equals(s, "")) {
+            if (!Objects.equals(s, "")) {
                 if (restaurant.getRestaurantname().toLowerCase().contains(s.toLowerCase())) {
                     restaurantsFiltered.add(restaurant);
                 }
@@ -67,31 +67,31 @@ public class RestaurantsListViewModel extends ViewModel implements RestaurantsCa
                                 userPosition,
                                 new LatLng(filteredRestaurants.get(0).getRestaurantposition().latitude,
                                         filteredRestaurants.get(0).getRestaurantposition().longitude));
-                        if(distance > distanceTemp){
+                        if (distance > distanceTemp) {
                             filteredRestaurants.add(restaurant);
                         } else {
-                            filteredRestaurants.add(0,restaurant);
+                            filteredRestaurants.add(0, restaurant);
                         }
                         break;
                     }
                     default: {
                         indexToAdd = -1;
-                        for(int i = 0; i < filteredRestaurants.size(); i++){
+                        for (int i = 0; i < filteredRestaurants.size(); i++) {
                             distanceTemp = computeDistanceBetween(
                                     userPosition,
                                     new LatLng(filteredRestaurants.get(i).getRestaurantposition().latitude,
                                             filteredRestaurants.get(i).getRestaurantposition().longitude));
-                            if(distance > distanceTemp){
+                            if (distance > distanceTemp) {
                                 indexToAdd = -1;
 
-                            } else if(indexToAdd == -1) {
+                            } else if (indexToAdd == -1) {
                                 indexToAdd = i;
                             }
                         }
-                        if(indexToAdd == -1){
+                        if (indexToAdd == -1) {
                             filteredRestaurants.add(restaurant);
                         } else {
-                            filteredRestaurants.add(indexToAdd,restaurant);
+                            filteredRestaurants.add(indexToAdd, restaurant);
                         }
                     }
                 }

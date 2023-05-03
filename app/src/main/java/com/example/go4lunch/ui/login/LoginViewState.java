@@ -1,10 +1,9 @@
 package com.example.go4lunch.ui.login;
 
 import com.example.go4lunch.model.UserEntity;
-import com.firebase.ui.auth.data.model.User;
-import com.google.firebase.auth.FirebaseUser;
 
-public class LoginViewState {}
+public class LoginViewState {
+}
 
 class OnSignInSuccess extends LoginViewState {
     private final UserEntity user;
@@ -13,12 +12,12 @@ class OnSignInSuccess extends LoginViewState {
         this.user = user;
     }
 
-    public UserEntity getUser() {
-        return user;
-    }
 }
-class OnSignInFailure extends LoginViewState {}
-class UserAlreadySignIn extends  LoginViewState {
+
+class OnSignInFailure extends LoginViewState {
+}
+
+class UserAlreadySignIn extends LoginViewState {
     private final boolean isConnected;
 
     public UserAlreadySignIn(boolean isConnected) {
