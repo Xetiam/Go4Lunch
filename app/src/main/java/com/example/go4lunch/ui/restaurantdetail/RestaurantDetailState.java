@@ -59,3 +59,5 @@ class CurrentUserLunchState extends RestaurantDetailState {
 
 
 }
+
+class SetNotificationState extends RestaurantDetailState {}

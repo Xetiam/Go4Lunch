@@ -22,6 +22,7 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
     public LiveData<RestaurantDetailState> state = _state;
     private String restaurantId;
     private boolean isEvaluate;
+    private boolean shoulSetNotification;
 
     public RestaurantDetailViewModel(PlacesRepository placesRepository, RestaurantRepositoryContract restaurantRepository, UserRepositoryContract userRepository) {
         this.placesRepository = placesRepository;
@@ -67,6 +68,7 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
 
     @Override
     public void lunchersCallback(ArrayList<String> lunchers) {
+        shoulSetNotification = true;
         if (lunchers.size() > 0) {
             userRepository.getUsersLuncherByIds(lunchers, this);
         }
@@ -85,6 +87,10 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
 
     @Override
     public void isLuncherCallback(boolean isLuncher) {
+        if(isLuncher && shoulSetNotification){
+            _state.postValue(new SetNotificationState());
+        }
         _state.postValue(new CurrentUserLunchState(isLuncher));
+        shoulSetNotification = false;
     }
 }
