@@ -49,8 +49,15 @@ class LuncherState extends RestaurantDetailState {
 class CurrentUserLunchState extends RestaurantDetailState {
     private final boolean isCurrentUserLuncher;
 
-    CurrentUserLunchState(boolean isCurrentUserLuncher) {
+    public boolean isSetNotification() {
+        return setNotification;
+    }
+
+    private final boolean setNotification;
+
+    CurrentUserLunchState(boolean isCurrentUserLuncher, boolean setNotification) {
         this.isCurrentUserLuncher = isCurrentUserLuncher;
+        this.setNotification = setNotification;
     }
 
     public boolean isCurrentUserLuncher() {
@@ -59,5 +66,3 @@ class CurrentUserLunchState extends RestaurantDetailState {
 
 
 }
-
-class SetNotificationState extends RestaurantDetailState {}

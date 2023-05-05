@@ -63,12 +63,12 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
     }
 
     public void selectOrCancelLunch() {
+        shoulSetNotification = true;
         userRepository.updateLunchChoiceOnUserAndPreviousRestaurant(restaurantId, this);
     }
 
     @Override
     public void lunchersCallback(ArrayList<String> lunchers) {
-        shoulSetNotification = true;
         if (lunchers.size() > 0) {
             userRepository.getUsersLuncherByIds(lunchers, this);
         }
@@ -87,10 +87,9 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
 
     @Override
     public void isLuncherCallback(boolean isLuncher) {
-        if(isLuncher && shoulSetNotification){
-            _state.postValue(new SetNotificationState());
-        }
-        _state.postValue(new CurrentUserLunchState(isLuncher));
+        boolean setNotification;
+        setNotification = isLuncher && shoulSetNotification;
+        _state.postValue(new CurrentUserLunchState(isLuncher, setNotification));
         shoulSetNotification = false;
     }
 }

@@ -128,9 +128,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     }
 
     private void render(RestaurantDetailState restaurantDetailState) {
-        if(restaurantDetailState instanceof  SetNotificationState) {
-            scheduleNotification();
-        }
         if (restaurantDetailState instanceof HasEvaluate) {
             HasEvaluate state = (HasEvaluate) restaurantDetailState;
             renderHasEvaluate(state);
@@ -199,6 +196,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     }
 
     private void renderCurrentLuncher(CurrentUserLunchState state) {
+        if(state.isSetNotification()){
+            scheduleNotification();
+        }
         if (state.isCurrentUserLuncher()) {
             binding.lunchButton.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.baseline_check_24));
         } else {
