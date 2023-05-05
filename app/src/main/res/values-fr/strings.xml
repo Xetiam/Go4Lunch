@@ -28,5 +28,7 @@
     <string name="validate_user_name">Valider</string>
     <string name="user_name_modifier_hint">Modifier votre pseudo ici</string>
     <string name="toast_modify_user_name">Vous devez renseigner un pseudo pour pouvoir le changer !</string>
-
+    <string name="notification_title">It\'s time !</string>
+    <string name="notification_message_pre">Vous avez choisis \"</string>
+    <string name="notification_message_post">\" pour votre repas du midi. Venez voir qui d\'autre y mange !</string>
 </resources>

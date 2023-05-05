@@ -15,7 +15,6 @@ import androidx.core.view.MenuHost;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.example.go4lunch.R;
 import com.example.go4lunch.ViewModelFactory;
@@ -58,8 +57,6 @@ public class CoworkerFragment extends Fragment {
                 return false;
             }
         });
-
-        binding.coworkerRecycler.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL));
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(CoworkerViewModel.class);
         viewModel.state.observe(requireActivity(), this::render);
         viewModel.initCoworker();

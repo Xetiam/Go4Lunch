@@ -1,4 +1,6 @@
 <resources>
+    <string name="notification_name" translatable="false">NotificationLunch Channel</string>
+    <string name="notification_description" translatable="false">channel to remind lunch</string>
     <string name="app_name">Go4Lunch</string>t
     <string name="gg_button_text">Sign in with Google</string>
     <string name="mail_button_text">SIGN IN WITH YOUR EMAIL</string>
@@ -28,4 +30,7 @@
     <string name="validate_user_name">Validate</string>
     <string name="user_name_modifier_hint">Change your user name here</string>
     <string name="toast_modify_user_name">You have to chose a user name to change it !</string>
+    <string name="notification_title">It\'s time !</string>
+    <string name="notification_message_pre">You\'ve choose \"</string>
+    <string name="notification_message_post">\" to eat for this lunch. Check who want to eat here too !</string>
 </resources>

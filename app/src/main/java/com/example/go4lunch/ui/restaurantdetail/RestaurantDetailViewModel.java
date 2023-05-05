@@ -6,9 +6,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.go4lunch.data.PlacesRepository;
-import com.example.go4lunch.data.RestaurantRepository;
 import com.example.go4lunch.data.RestaurantRepositoryContract;
-import com.example.go4lunch.data.UserRepository;
 import com.example.go4lunch.data.UserRepositoryContract;
 import com.example.go4lunch.model.RestaurantDetailEntity;
 import com.example.go4lunch.model.UserEntity;
@@ -25,10 +23,10 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
     private String restaurantId;
     private boolean isEvaluate;
 
-    public RestaurantDetailViewModel(PlacesRepository placesRepository) {
+    public RestaurantDetailViewModel(PlacesRepository placesRepository, RestaurantRepositoryContract restaurantRepository, UserRepositoryContract userRepository) {
         this.placesRepository = placesRepository;
-        this.restaurantRepository = new RestaurantRepository();
-        this.userRepository = new UserRepository();
+        this.restaurantRepository = restaurantRepository;
+        this.userRepository = userRepository;
     }
 
     public void initDetail(String restaurantId) {
