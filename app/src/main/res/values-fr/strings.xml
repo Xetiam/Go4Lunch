@@ -31,4 +31,7 @@
     <string name="notification_title">It\'s time !</string>
     <string name="notification_message_pre">Vous avez choisis \"</string>
     <string name="notification_message_post">\" pour votre repas du midi. Venez voir qui d\'autre y mange !</string>
+    <string name="spinner_by_position">Tri par distance</string>
+    <string name="spinner_by_evaluation">Tri par vote</string>
+    <string name="spinner_by_luncher">Tri par mangeur</string>
 </resources>

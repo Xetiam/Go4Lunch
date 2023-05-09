@@ -33,4 +33,7 @@
     <string name="notification_title">It\'s time !</string>
     <string name="notification_message_pre">You\'ve choose \"</string>
     <string name="notification_message_post">\" to eat for this lunch. Check who want to eat here too !</string>
+    <string name="spinner_by_position">Sorted by position</string>
+    <string name="spinner_by_evaluation">Sorted by evaluation</string>
+    <string name="spinner_by_luncher">Sorted by luncher</string>
 </resources>

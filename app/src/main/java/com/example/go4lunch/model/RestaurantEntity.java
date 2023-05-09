@@ -53,7 +53,11 @@ public class RestaurantEntity implements Serializable {
     }
 
     public Long getEvaluation() {
-        return evaluation;
+        if(evaluation != null) {
+            return evaluation;
+        } else {
+            return 0L;
+        }
     }
 
     public String getOpeningHour() {
@@ -65,7 +69,11 @@ public class RestaurantEntity implements Serializable {
     }
 
     public ArrayList<String> getLunchers() {
-        return lunchers;
+        if(lunchers != null) {
+            return lunchers;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -30,6 +32,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 public class RestaurantListFragment extends Fragment {
     ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts
@@ -45,7 +49,7 @@ public class RestaurantListFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRestaurantListBinding.inflate(inflater);
         View view = binding.getRoot();
-
+        binding.restaurantRecycler.setHasFixedSize(false);
         MenuHost menuHost = requireActivity();
         menuHost.addMenuProvider(new MenuProvider() {
             @Override
@@ -72,12 +76,10 @@ public class RestaurantListFragment extends Fragment {
                 return false;
             }
         });
-
         binding.restaurantRecycler.setLayoutManager(new LinearLayoutManager(requireActivity()));
         binding.restaurantRecycler.addItemDecoration(new DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL));
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantsListViewModel.class);
         viewModel.state.observe(requireActivity(), this::render);
-
         if (ActivityCompat.checkSelfPermission(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             locationPermissionRequest.launch(new String[]
@@ -89,7 +91,29 @@ public class RestaurantListFragment extends Fragment {
             userPosition = new LatLng(location.getLatitude(), location.getLongitude());
             viewModel.initRestaurantList(userPosition);
         });
+        setSorterSpinner();
         return view;
+    }
+
+    private void setSorterSpinner() {
+        ArrayList<String> arraySorter = new ArrayList<>();
+        arraySorter.add(getString(R.string.spinner_by_position));
+        arraySorter.add(getString(R.string.spinner_by_evaluation));
+        arraySorter.add(getString(R.string.spinner_by_luncher));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(),
+                android.R.layout.simple_spinner_item, arraySorter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerSort.setAdapter(adapter);
+        binding.spinnerSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                viewModel.sortRestaurants(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
     }
 
     private void render(RestaurantListViewState restaurantListViewState) {
@@ -100,8 +124,7 @@ public class RestaurantListFragment extends Fragment {
                     userPosition,
                     requireActivity());
             binding.restaurantRecycler.setAdapter(adapter);
+            binding.restaurantRecycler.getAdapter().notifyDataSetChanged();
         }
     }
-
-
 }
