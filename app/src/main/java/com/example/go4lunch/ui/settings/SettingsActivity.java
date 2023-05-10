@@ -20,8 +20,8 @@ import com.example.go4lunch.databinding.ActivitySettingsBinding;
 import com.example.go4lunch.ui.login.LoginActivity;
 
 public class SettingsActivity extends AppCompatActivity {
-    private final String NOTIFICATIONS_PREFERENCES = "notification_preferences";
-    private final String IS_ACTIVATED = "is_activated";
+    public static final String NOTIFICATIONS_PREFERENCES = "notification_preferences";
+    public static final String IS_ACTIVATED = "is_activated";
     private ActivitySettingsBinding binding;
     private SettingsViewModel viewModel;
 

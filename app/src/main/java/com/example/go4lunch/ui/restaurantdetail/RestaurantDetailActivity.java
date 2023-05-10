@@ -60,10 +60,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         setContentView(view);
         IntentHelper helper = new IntentHelper();
         restaurant = helper.getRestaurantClicked(getIntent());
-        SharedPreferences preferences =  this.getSharedPreferences(SHARED_PREFERENCES_RESTAURANT_ID, Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(SHARED_PREFERENCES_RESTAURANT_ID, Context.MODE_PRIVATE);
         String restaurantJson = preferences.getString(SHARED_PREFERENCES_RESTAURANT_ID, null);
         Gson gson = new Gson();
-        restaurant = restaurant!=null ? restaurant : gson.fromJson(restaurantJson, RestaurantEntity.class);
+        restaurant = restaurant != null ? restaurant : gson.fromJson(restaurantJson, RestaurantEntity.class);
         createNotificationChannel();
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantDetailViewModel.class);
         viewModel.state.observe(this, this::render);
@@ -167,7 +167,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 }
             }
         }
-        binding.lunchButton.setOnClickListener(view -> viewModel.selectOrCancelLunch());
+        binding.lunchButton.setOnClickListener(view -> viewModel.selectOrCancelLunch(this));
         binding.phoneButton.setOnClickListener(view -> {
             String number = ("tel:" + state.getRestaurantDetailEntity().getFormattedPhoneNumber());
             Intent mIntent = new Intent(Intent.ACTION_CALL);
@@ -196,7 +196,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     }
 
     private void renderCurrentLuncher(CurrentUserLunchState state) {
-        if(state.isSetNotification()){
+        if (state.isSetNotification()) {
             scheduleNotification();
         }
         if (state.isCurrentUserLuncher()) {

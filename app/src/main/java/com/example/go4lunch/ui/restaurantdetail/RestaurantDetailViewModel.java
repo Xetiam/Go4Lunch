@@ -1,5 +1,11 @@
 package com.example.go4lunch.ui.restaurantdetail;
 
+import static com.example.go4lunch.ui.settings.SettingsActivity.IS_ACTIVATED;
+import static com.example.go4lunch.ui.settings.SettingsActivity.NOTIFICATIONS_PREFERENCES;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -62,8 +68,9 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
                 this);
     }
 
-    public void selectOrCancelLunch() {
-        shoulSetNotification = true;
+    public void selectOrCancelLunch(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(NOTIFICATIONS_PREFERENCES, Context.MODE_PRIVATE);
+        shoulSetNotification = preferences.getBoolean(IS_ACTIVATED,false);
         userRepository.updateLunchChoiceOnUserAndPreviousRestaurant(restaurantId, this);
     }
 
