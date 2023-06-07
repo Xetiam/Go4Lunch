@@ -4,18 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.RestaurantRepository;
-import com.example.go4lunch.data.UserRepository;
+import com.example.go4lunch.data.restaurant.RestaurantRepository;
+import com.example.go4lunch.data.restaurant.RestaurantRepositoryContract;
+import com.example.go4lunch.data.user.UserRepository;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.RestaurantCallback;
 
-public class RestaurantsViewModel extends ViewModel implements RestaurantCallback {
+public class RestaurantViewModel extends ViewModel implements RestaurantCallback {
     private final MutableLiveData<RestaurantState> _state = new MutableLiveData<>();
     private final UserRepository userRepository;
-    private final RestaurantRepository restaurantRepository;
+    private final RestaurantRepositoryContract restaurantRepository;
     LiveData<RestaurantState> state = _state;
 
-    public RestaurantsViewModel(UserRepository userRepository, RestaurantRepository restaurantRepository) {
+    public RestaurantViewModel(UserRepository userRepository, RestaurantRepository restaurantRepository) {
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
     }

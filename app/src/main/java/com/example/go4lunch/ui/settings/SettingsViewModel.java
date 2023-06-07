@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.UserRepository;
-import com.example.go4lunch.data.UserRepositoryContract;
+import com.example.go4lunch.data.user.UserRepository;
+import com.example.go4lunch.data.user.UserRepositoryContract;
 import com.example.go4lunch.utils.SignOutCallback;
 
 import java.util.Objects;

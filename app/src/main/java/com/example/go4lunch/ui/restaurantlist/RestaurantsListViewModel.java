@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.RestaurantRepositoryContract;
+import com.example.go4lunch.data.restaurant.RestaurantRepository;
+import com.example.go4lunch.data.restaurant.RestaurantRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.RestaurantsCallback;
 import com.google.android.gms.maps.model.LatLng;
@@ -24,7 +25,7 @@ public class RestaurantsListViewModel extends ViewModel implements RestaurantsCa
     private LatLng userPosition;
     private String searchQuery;
 
-    public RestaurantsListViewModel(RestaurantRepositoryContract restaurantRepository) {
+    public RestaurantsListViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
     }
 
@@ -53,56 +54,9 @@ public class RestaurantsListViewModel extends ViewModel implements RestaurantsCa
     }
 
     private List<RestaurantEntity> sortRestaurantsByPosition(List<RestaurantEntity> entities) {
-        double distance;
-        double distanceTemp;
-        int indexToAdd;
-        List<RestaurantEntity> sortedRestaurants = new ArrayList<>();
-        for (RestaurantEntity restaurant : entities) {
-            distance = computeDistanceBetween(
-                    userPosition,
-                    new LatLng(restaurant.getRestaurantposition().latitude,
-                            restaurant.getRestaurantposition().longitude));
-            if (distance <= 20000) {
-                switch (sortedRestaurants.size()) {
-                    case 0: {
-                        sortedRestaurants.add(restaurant);
-                        break;
-                    }
-                    case 1: {
-                        distanceTemp = computeDistanceBetween(
-                                userPosition,
-                                new LatLng(sortedRestaurants.get(0).getRestaurantposition().latitude,
-                                        sortedRestaurants.get(0).getRestaurantposition().longitude));
-                        if (distance > distanceTemp) {
-                            sortedRestaurants.add(restaurant);
-                        } else {
-                            sortedRestaurants.add(0, restaurant);
-                        }
-                        break;
-                    }
-                    default: {
-                        indexToAdd = -1;
-                        for (int i = 0; i < sortedRestaurants.size(); i++) {
-                            distanceTemp = computeDistanceBetween(
-                                    userPosition,
-                                    new LatLng(sortedRestaurants.get(i).getRestaurantposition().latitude,
-                                            sortedRestaurants.get(i).getRestaurantposition().longitude));
-                            if (distance > distanceTemp) {
-                                indexToAdd = -1;
-
-                            } else if (indexToAdd == -1) {
-                                indexToAdd = i;
-                            }
-                        }
-                        if (indexToAdd == -1) {
-                            sortedRestaurants.add(restaurant);
-                        } else {
-                            sortedRestaurants.add(indexToAdd, restaurant);
-                        }
-                    }
-                }
-            }
-        }
+        List<RestaurantEntity> sortedRestaurants = new ArrayList<>(entities);
+        sortedRestaurants.removeIf(restaurant -> computeDistanceBetween(userPosition, restaurant.getRestaurantposition()) > 20000);
+        sortedRestaurants.sort(Comparator.comparingDouble(restaurant -> computeDistanceBetween(userPosition, restaurant.getRestaurantposition())));
         return sortedRestaurants;
     }
 
@@ -111,6 +65,7 @@ public class RestaurantsListViewModel extends ViewModel implements RestaurantsCa
         switch (i) {
             case 0: {
                 arrayToSort = (ArrayList<RestaurantEntity>) sortRestaurantsByPosition(fetchedRestaurants);
+                break;
             }
             case 1: {
                 arrayToSort.sort(Comparator.comparingInt(entity -> -Math.toIntExact(entity.getEvaluation())));

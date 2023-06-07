@@ -12,8 +12,10 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.go4lunch.data.PlacesRepository;
-import com.example.go4lunch.data.RestaurantRepositoryContract;
-import com.example.go4lunch.data.UserRepositoryContract;
+import com.example.go4lunch.data.restaurant.RestaurantRepository;
+import com.example.go4lunch.data.restaurant.RestaurantRepositoryContract;
+import com.example.go4lunch.data.user.UserRepository;
+import com.example.go4lunch.data.user.UserRepositoryContract;
 import com.example.go4lunch.model.RestaurantDetailEntity;
 import com.example.go4lunch.model.UserEntity;
 import com.example.go4lunch.utils.DetailCallback;
@@ -30,7 +32,7 @@ public class RestaurantDetailViewModel extends ViewModel implements DetailCallba
     private boolean isEvaluate;
     private boolean shoulSetNotification;
 
-    public RestaurantDetailViewModel(PlacesRepository placesRepository, RestaurantRepositoryContract restaurantRepository, UserRepositoryContract userRepository) {
+    public RestaurantDetailViewModel(PlacesRepository placesRepository, RestaurantRepository restaurantRepository, UserRepository userRepository) {
         this.placesRepository = placesRepository;
         this.restaurantRepository = restaurantRepository;
         this.userRepository = userRepository;

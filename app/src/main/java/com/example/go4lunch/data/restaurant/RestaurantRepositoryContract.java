@@ -1,7 +1,8 @@
-package com.example.go4lunch.data;
+package com.example.go4lunch.data.restaurant;
 
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.utils.DetailCallback;
+import com.example.go4lunch.utils.RestaurantCallback;
 import com.example.go4lunch.utils.RestaurantsCallback;
 
 import java.util.ArrayList;
@@ -14,5 +15,6 @@ public interface RestaurantRepositoryContract {
     void addOrRemoveAnEvaluationOnRestaurantAndUser(String restaurantId, String userId, Boolean remove, DetailCallback callback);
 
     void getLunchers(String restaurantId, String userId, DetailCallback callback);
+    void getRestaurantById(String restaurantId, RestaurantCallback callback);
 
 }

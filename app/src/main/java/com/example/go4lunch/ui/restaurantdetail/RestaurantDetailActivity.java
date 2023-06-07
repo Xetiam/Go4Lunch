@@ -67,7 +67,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         createNotificationChannel();
         viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantDetailViewModel.class);
         viewModel.state.observe(this, this::render);
-        viewModel.initDetail(restaurant.getRestaurantid());
+        viewModel.initDetail(restaurant.getRestaurantId());
     }
 
     private void createNotificationChannel() {

@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.go4lunch.data.PlacesRepository;
-import com.example.go4lunch.data.RestaurantRepository;
-import com.example.go4lunch.data.RestaurantRepositoryContract;
+import com.example.go4lunch.data.restaurant.RestaurantRepository;
+import com.example.go4lunch.data.restaurant.RestaurantRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -24,9 +24,9 @@ public class RestaurantMapViewModel extends ViewModel {
     LiveData<RestaurantMapViewState> state = _state;
     private ArrayList<RestaurantEntity> fetchedRestaurants = new ArrayList<>();
 
-    public RestaurantMapViewModel(PlacesRepository placesRepository) {
+    public RestaurantMapViewModel(PlacesRepository placesRepository, RestaurantRepository restaurantRepository) {
         this.placesRepository = placesRepository;
-        this.restaurantRepository = new RestaurantRepository();
+        this.restaurantRepository = restaurantRepository;
     }
 
 

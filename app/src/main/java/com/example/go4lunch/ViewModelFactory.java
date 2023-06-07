@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.go4lunch.data.PlacesRepository;
-import com.example.go4lunch.data.RestaurantRepository;
+import com.example.go4lunch.data.restaurant.RestaurantDataSource;
+import com.example.go4lunch.data.restaurant.RestaurantRepository;
 import com.example.go4lunch.data.RetrofitService;
-import com.example.go4lunch.data.UserRepository;
-import com.example.go4lunch.ui.RestaurantsViewModel;
+import com.example.go4lunch.data.user.UserDataSource;
+import com.example.go4lunch.data.user.UserRepository;
+import com.example.go4lunch.ui.RestaurantViewModel;
 import com.example.go4lunch.ui.coworker.CoworkerViewModel;
 import com.example.go4lunch.ui.login.LoginViewModel;
 import com.example.go4lunch.ui.restaurantdetail.RestaurantDetailViewModel;
@@ -18,13 +20,16 @@ import com.example.go4lunch.ui.settings.SettingsViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private final PlacesRepository placesRepository = new PlacesRepository(
-            RetrofitService.getPlacesApi()
-    );
-    private final UserRepository userRepository = new UserRepository();
-    private final RestaurantRepository restaurantRepository = new RestaurantRepository();
+    private final PlacesRepository placesRepository;
+    private final UserRepository userRepository;
+    private final RestaurantRepository restaurantRepository;
 
     private ViewModelFactory() {
+        placesRepository = new PlacesRepository(
+                RetrofitService.getPlacesApi()
+        );
+        userRepository = new UserRepository(new UserDataSource());
+        restaurantRepository = new RestaurantRepository(new RestaurantDataSource());
     }
 
     public static ViewModelFactory getInstance() {
@@ -39,7 +44,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             return (T) new LoginViewModel(userRepository);
         }
         if (modelClass.isAssignableFrom(RestaurantMapViewModel.class)) {
-            return (T) new RestaurantMapViewModel(placesRepository);
+            return (T) new RestaurantMapViewModel(placesRepository,restaurantRepository);
         }
         if (modelClass.isAssignableFrom(RestaurantsListViewModel.class)) {
             return (T) new RestaurantsListViewModel(restaurantRepository);
@@ -50,8 +55,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(RestaurantDetailViewModel.class)) {
             return (T) new RestaurantDetailViewModel(placesRepository, restaurantRepository, userRepository);
         }
-        if (modelClass.isAssignableFrom(RestaurantsViewModel.class)) {
-            return (T) new RestaurantsViewModel(userRepository, restaurantRepository);
+        if (modelClass.isAssignableFrom(RestaurantViewModel.class)) {
+            return (T) new RestaurantViewModel(userRepository, restaurantRepository);
         }
         if (modelClass.isAssignableFrom(SettingsViewModel.class)) {
             return (T) new SettingsViewModel(userRepository);

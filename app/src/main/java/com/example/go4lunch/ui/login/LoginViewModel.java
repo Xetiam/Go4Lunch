@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.UserRepositoryContract;
+import com.example.go4lunch.data.user.UserRepository;
+import com.example.go4lunch.data.user.UserRepositoryContract;
 import com.example.go4lunch.model.UserEntity;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.firebase.ui.auth.data.model.User;
@@ -19,7 +20,7 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginViewState> _state = new MutableLiveData<>();
     final LiveData<LoginViewState> state = _state;
 
-    public LoginViewModel(UserRepositoryContract userRepository) {
+    public LoginViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

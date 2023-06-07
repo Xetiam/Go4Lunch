@@ -1,7 +1,6 @@
 package com.example.go4lunch.ui.restaurantmap;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -93,7 +92,6 @@ public class RestaurantMapFragment extends Fragment
         return binding.getRoot();
     }
 
-    @SuppressLint("PotentialBehaviorOverride")
     private void render(RestaurantMapViewState restaurantMapViewState) {
         if (restaurantMapViewState instanceof WithResponseState) {
             WithResponseState state = (WithResponseState) restaurantMapViewState;

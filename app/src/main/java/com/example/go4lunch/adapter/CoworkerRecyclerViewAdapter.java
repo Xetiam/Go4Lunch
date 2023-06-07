@@ -55,7 +55,7 @@ public class CoworkerRecyclerViewAdapter extends RecyclerView.Adapter<CoworkerRe
     private String getRestaurantById(String lunchChoice) {
         String restaurantName = "";
         for (RestaurantEntity restaurant : restaurantEntities) {
-            if (Objects.equals(restaurant.getRestaurantid(), lunchChoice)) {
+            if (Objects.equals(restaurant.getRestaurantId(), lunchChoice)) {
                 restaurantName = restaurant.getRestaurantname();
                 break;
             }

@@ -7,15 +7,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class RestaurantEntity implements Serializable {
-    private ArrayList<String> lunchers;
-    private String restaurantid;
-    private String restaurantname;
-    private String restaurantdescription;
-    private String openingHour;
-    private double restaurantpositionlat;
-    private double restaurantpositionlng;
-    private Long evaluation;
-    private String drawableUrl;
+    private final ArrayList<String> lunchers;
+    private final String restaurantid;
+    private final String restaurantname;
+    private final String restaurantdescription;
+    private final String openingHour;
+    private final double restaurantpositionlat;
+    private final double restaurantpositionlng;
+    private final Long evaluation;
+    private final String drawableUrl;
 
     public RestaurantEntity(String restaurantid,
                             String restaurantname,
@@ -36,7 +36,7 @@ public class RestaurantEntity implements Serializable {
         this.lunchers = lunchers;
     }
 
-    public String getRestaurantid() {
+    public String getRestaurantId() {
         return restaurantid;
     }
 

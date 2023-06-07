@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.go4lunch.data.UserRepositoryContract;
+import com.example.go4lunch.data.user.UserRepositoryContract;
 import com.example.go4lunch.model.RestaurantEntity;
 import com.example.go4lunch.model.UserEntity;
 import com.example.go4lunch.utils.CoworkerCallback;
@@ -42,7 +42,7 @@ public class CoworkerViewModel extends ViewModel implements CoworkerCallback {
                 if (restaurant.getRestaurantname().toLowerCase().contains(s.toLowerCase())) {
                     restaurantsFiltered.add(restaurant);
                     for (UserEntity user : fetchedUsers) {
-                        if (Objects.equals(user.getLunchChoice(), restaurant.getRestaurantid())) {
+                        if (Objects.equals(user.getLunchChoice(), restaurant.getRestaurantId())) {
                             userFiltered.add(user);
                         }
                     }

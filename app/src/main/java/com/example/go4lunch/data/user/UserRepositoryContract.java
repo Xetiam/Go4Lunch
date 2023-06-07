@@ -1,4 +1,4 @@
-package com.example.go4lunch.data;
+package com.example.go4lunch.data.user;
 
 import com.example.go4lunch.model.UserEntity;
 import com.example.go4lunch.utils.CoworkerCallback;

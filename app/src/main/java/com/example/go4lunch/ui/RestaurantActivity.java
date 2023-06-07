@@ -54,7 +54,7 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
                     });
     private ActivityRestaurantBinding binding;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    private RestaurantsViewModel viewModel;
+    private RestaurantViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class RestaurantActivity extends AppCompatActivity implements NavigationV
         binding = ActivityRestaurantBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantsViewModel.class);
+        viewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(RestaurantViewModel.class);
         viewModel.state.observe(this, this::render);
         viewModel.setUserDrawer();
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,
