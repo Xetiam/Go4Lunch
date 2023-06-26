@@ -115,7 +115,7 @@ public class RestaurantRepository implements RestaurantRepositoryContract, Callb
             callback.isLuncherCallback(false);
             callback.lunchersCallback(new ArrayList<>());
         }
-        //callback.lunchersCallback(lunchers);
+        callback.lunchersCallback(lunchers);
     }
 
     @Override

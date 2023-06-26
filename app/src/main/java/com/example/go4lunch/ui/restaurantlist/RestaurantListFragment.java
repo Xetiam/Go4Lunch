@@ -95,6 +95,12 @@ public class RestaurantListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        viewModel.initRestaurantList(userPosition);
+        super.onResume();
+    }
+
     private void setSorterSpinner() {
         ArrayList<String> arraySorter = new ArrayList<>();
         arraySorter.add(getString(R.string.spinner_by_position));
